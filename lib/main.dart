@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
         theme: tema.temaActual,
         routes: {
           'home': (context) => const HomeScreen(),
+          'pronostico': (context) => const Pronostico(),
           'custom_list': (context) => const CustomListScreen(),
           'profile': (context) => const ProfileScreen(),
           'custom_list_item': (context) => const CustomListItem(),
