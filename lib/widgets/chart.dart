@@ -113,7 +113,7 @@ class Chart extends StatelessWidget {
                             final spotIndex =
                                 response.lineBarSpots!.first.spotIndex;
                             // print('touched index: $spotIndex');
-                            Navigator.pushNamed(context, 'pronostico_dia',
+                            Navigator.pushNamed(context, 'pronostico_unitario',
                                 arguments: <String, dynamic>{
                                   'chartType': type,
                                   'time': labels[spotIndex],
