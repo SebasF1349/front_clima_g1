@@ -2,11 +2,17 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class Chart extends StatelessWidget {
+  final String type;
   final List<String> labels;
   final List<double> min;
   final List<double>? max;
 
-  const Chart({required this.labels, required this.min, this.max, super.key});
+  const Chart(
+      {required this.labels,
+      required this.min,
+      this.max,
+      required this.type,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +115,8 @@ class Chart extends StatelessWidget {
                             // print('touched index: $spotIndex');
                             Navigator.pushNamed(context, 'pronostico_dia',
                                 arguments: <String, dynamic>{
-                                  'day': spotIndex,
+                                  'chartType': type,
+                                  'time': labels[spotIndex],
                                 });
                             FocusManager.instance.primaryFocus?.unfocus();
                           }

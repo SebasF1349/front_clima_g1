@@ -42,6 +42,7 @@ class Pronostico extends StatelessWidget {
               width: size.width,
               height: 150,
               child: Chart(
+                type: 'horario',
                 min: tempHorario,
                 labels: hourLabelsHorario,
               ))
@@ -53,6 +54,7 @@ class Pronostico extends StatelessWidget {
               width: size.width,
               height: 150,
               child: Chart(
+                type: 'diario',
                 min: tempDiarioMin,
                 max: tempDiarioMax,
                 labels: hourLabelsDiario,
