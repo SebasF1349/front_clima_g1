@@ -112,10 +112,9 @@ class Chart extends StatelessWidget {
                           if (event is FlTapUpEvent) {
                             final spotIndex =
                                 response.lineBarSpots!.first.spotIndex;
-                            // print('touched index: $spotIndex');
                             Navigator.pushNamed(context, 'pronostico_unitario',
                                 arguments: <String, dynamic>{
-                                  'chartType': type,
+                                  'dataType': type,
                                   'time': labels[spotIndex],
                                 });
                             FocusManager.instance.primaryFocus?.unfocus();

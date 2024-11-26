@@ -16,6 +16,54 @@ class PronosticoDia extends StatelessWidget {
 
     final size = MediaQuery.of(context).size;
     final data = getData(args);
+    final next = getNext(args);
+    final prev = getPrev(args);
+
+    final List<Widget> buttons = [];
+    // NOTE: Deberian hacer wrap los botones?
+    if (prev != '') {
+      buttons.add(Expanded(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, 'pronostico_unitario',
+                ModalRoute.withName('pronostico'),
+                arguments: <String, dynamic>{
+                  'dataType': args['dataType'],
+                  'time': prev,
+                });
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          style: const ButtonStyle(
+            iconColor: WidgetStatePropertyAll<Color>(Colors.green),
+          ),
+          child: const Icon(Icons.arrow_back),
+        ),
+      ));
+    }
+    if (next != '') {
+      buttons.add(Expanded(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamedAndRemoveUntil(context, 'pronostico_unitario',
+                ModalRoute.withName('pronostico'),
+                arguments: <String, dynamic>{
+                  'dataType': args['dataType'],
+                  'time': next,
+                });
+            // Navigator.popAndPushNamed(context, 'pronostico_unitario',
+            //     arguments: <String, dynamic>{
+            //       'dataType': args['dataType'],
+            //       'time': next,
+            //     });
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          style: const ButtonStyle(
+            iconColor: WidgetStatePropertyAll(Colors.green),
+          ),
+          child: const Icon(Icons.arrow_forward),
+        ),
+      ));
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -23,18 +71,26 @@ class PronosticoDia extends StatelessWidget {
           centerTitle: true,
           elevation: 10,
         ),
-        body: Card(
-          elevation: 1,
-          child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ListTile(
-                  leading: Icon(data[index]['leading']),
-                  title: Text(data[index]['title']),
-                  subtitle: Text(data[index]['subtitle']),
-                );
-              }),
+        body: Column(
+          children: [
+            Card(
+              elevation: 1,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      leading: Icon(data[index]['leading']),
+                      title: Text(data[index]['title']),
+                      subtitle: Text(data[index]['subtitle']),
+                    );
+                  }),
+            ),
+            Row(
+              children: buttons,
+            )
+          ],
         ));
   }
 
@@ -45,7 +101,7 @@ class PronosticoDia extends StatelessWidget {
 
   List<Map<String, dynamic>> getData(Map<String, dynamic> args) {
     List<Map<String, dynamic>> returnData = [];
-    if (args['chartType'] == 'diario') {
+    if (args['dataType'] == 'diario') {
       final dateLabel = args['time'];
       final [day, month] = dateLabel.split('/');
       DateTime now = DateTime.now();
@@ -96,7 +152,7 @@ class PronosticoDia extends StatelessWidget {
           'subtitle': 'Cantidad de Horas De Precipitaciones'
         },
       ]);
-    } else if (args['chartType'] == 'horario') {
+    } else if (args['dataType'] == 'horario') {
       final data = pronosticoHorario['data']['hourly'];
       final units = pronosticoHorario['data']['hourly_units'];
 
@@ -137,5 +193,49 @@ class PronosticoDia extends StatelessWidget {
       ]);
     }
     return returnData;
+  }
+
+  String getNext(Map<String, dynamic> args) {
+    if (args['dataType'] == 'diario') {
+      final String dateLabel = args['time'];
+      final [day, month] = dateLabel.split('/');
+      final DateTime now = DateTime.now();
+      final data = pronosticoDiario['data']['daily'];
+      final int idx = data['time']!
+          .indexWhere((t) => t == '${now.year.toString()}-$month-$day');
+      if (idx == -1 || idx + 1 == data['time']!.length) return '';
+      String dateStr = (idx + 1 == data['time']!.length)
+          ? data['time'][0]
+          : data['time'][idx + 1];
+      DateTime date = DateTime.parse(dateStr);
+      return '${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}';
+    } else if (args['dataType'] == 'horario') {
+      final String timeLabel = args['time'];
+      final time = int.parse(timeLabel.substring(0, 2));
+      if (time == 23) return ''; // '00hs';
+      return '${(time + 1).toString().padLeft(2, "0")}hs';
+    }
+    return '';
+  }
+
+  String getPrev(Map<String, dynamic> args) {
+    if (args['dataType'] == 'diario') {
+      final String dateLabel = args['time'];
+      final [day, month] = dateLabel.split('/');
+      DateTime now = DateTime.now();
+      final data = pronosticoDiario['data']['daily'];
+      final int idx = data['time']
+          .indexWhere((t) => t == '${now.year.toString()}-$month-$day');
+      if (idx == -1 || idx == 0) return '';
+      String dateStr = (idx == 0) ? data['time'].last : data['time'][idx - 1];
+      DateTime date = DateTime.parse(dateStr);
+      return '${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}';
+    } else if (args['dataType'] == 'horario') {
+      final String timeLabel = args['time'];
+      final int time = int.parse(timeLabel.substring(0, 2));
+      if (time == 0) return ''; //'23hs';
+      return '${(time - 1).toString().padLeft(2, "0")}hs';
+    }
+    return '';
   }
 }
