@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:flutter_application_base/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -38,6 +40,7 @@ class BodyProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final temaProvider = Provider.of<ThemeProvider>(context, listen: true);
     return Column(
       children: [
         SwitchListTile.adaptive(
@@ -45,6 +48,7 @@ class BodyProfile extends StatelessWidget {
           value: Preferences.darkmode,
           onChanged: (bool value) {
             Preferences.darkmode = value;
+            value ? temaProvider.setDark() : temaProvider.setLight();
           },
         ),
         const SizedBox(
