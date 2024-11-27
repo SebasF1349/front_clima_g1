@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_application_base/widgets/climate_card.dart';
 import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart';
 import 'package:flutter_application_base/utils/weather_code_translation.dart';
@@ -25,6 +25,35 @@ class WeatherScreen extends StatelessWidget {
           weatherIcon: weatherIcon,
           temperature: temperature,
         ),
+      ),
+    );
+  }
+}
+ */
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_base/mocks/pronostico_mock.dart';
+import 'package:flutter_application_base/widgets/climate_item.dart';
+import 'package:flutter_application_base/utils/weather_utils.dart';
+
+class WeatherScreen extends StatelessWidget {
+  const WeatherScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Aquí simulas obtener los datos del mock.
+    final climateList = WeatherUtils.processWeatherData(pronostico);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Pronóstico del Clima"),
+      ),
+      body: ListView.builder(
+        itemCount: climateList.length,
+        itemBuilder: (context, index) {
+          final climateData = climateList[index];
+          return ClimateItem(climateData: climateData); // Pasas el objeto completo
+        },
       ),
     );
   }
