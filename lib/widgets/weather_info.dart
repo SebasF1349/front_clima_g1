@@ -40,46 +40,54 @@ class WeatherWidget extends StatelessWidget {
                 weatherEmoji,
                 style: TextStyle(
                   fontSize: 100,
-                  color: Colors.grey.withOpacity(0.1),
+                  color: Colors.grey.withOpacity(0.6), // Ajustar opacidad del emoji
                 ),
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "temp/st",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey.shade700,
-                ),
+          Align(
+            alignment: Alignment.center, // Asegura que los textos estén centrados
+            child: Padding(
+              padding: const EdgeInsets.all(8.0), // Ajustar el padding si es necesario
+              child: Column(
+                mainAxisSize: MainAxisSize.min, // Ajusta el tamaño de la columna al contenido
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center, // Alinea el texto al centro
+                children: [
+                  Text(
+                    "temp/st",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey.shade700,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    "$temperature°/$feelsLike°",
+                    style: const TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    "Prob. lluvia: ${rainProbability.toStringAsFixed(1)}%",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                  Text(
+                    "Precipitación: ${precipitation.toStringAsFixed(1)}mm",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 4),
-              Text(
-                "$temperature°/$feelsLike°",
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "Prob. lluvia: ${rainProbability.toStringAsFixed(1)}%",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-              Text(
-                "Precipitación: ${precipitation.toStringAsFixed(1)}mm",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey.shade600,
-                ),
-              ),
-            ],
+            ),
           ),
         ],
       ),
