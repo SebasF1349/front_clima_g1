@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           'home': (context) => const HomeScreen(),
           'pronostico': (context) => const Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
-          'weather_history': (context) => const WeatherTestScreen(), 
+          'weather_history': (context) => const WeatherScreen(), 
           'custom_list': (context) => const CustomListScreen(),
           'profile': (context) => const ProfileScreen(),
           'custom_list_item': (context) => const CustomListItem(),
