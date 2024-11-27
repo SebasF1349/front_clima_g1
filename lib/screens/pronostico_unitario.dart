@@ -3,8 +3,10 @@ import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
 import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart'
     show pronosticoHorario;
+import 'package:flutter_application_base/models/clima_card_data.dart';
 import 'package:flutter_application_base/utils/weather_code_translation.dart'
     show weatherCodes;
+import 'package:flutter_application_base/widgets/clima_card.dart';
 
 class PronosticoDia extends StatelessWidget {
   const PronosticoDia({super.key});
@@ -73,23 +75,8 @@ class PronosticoDia extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Card(
-              elevation: 1,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: Icon(data[index]['leading']),
-                      title: Text(data[index]['title']),
-                      subtitle: Text(data[index]['subtitle']),
-                    );
-                  }),
-            ),
-            Row(
-              children: buttons,
-            )
+            ClimaCard(data: data),
+            Row(children: buttons),
           ],
         ));
   }
@@ -99,8 +86,8 @@ class PronosticoDia extends StatelessWidget {
     return '${dateTime.hour.toString().padLeft(2, "0")}:${dateTime.minute.toString().padLeft(2, "0")}hs';
   }
 
-  List<Map<String, dynamic>> getData(Map<String, dynamic> args) {
-    List<Map<String, dynamic>> returnData = [];
+  List<ClimaCardData> getData(Map<String, dynamic> args) {
+    List<ClimaCardData> returnData = [];
     if (args['dataType'] == 'diario') {
       final dateLabel = args['time'];
       final [day, month] = dateLabel.split('/');
@@ -124,33 +111,30 @@ class PronosticoDia extends StatelessWidget {
           '${data['precipitation_probability_max'][idx]}%';
 
       returnData.addAll([
-        {
-          'title': temperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Temperatura (min/max)'
-        },
-        {
-          'title': apparentTemperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Sensación Térmica (min/max)'
-        },
-        {
-          'title': weatherCode!['label'],
-          'leading': weatherCode['icon'],
-          'subtitle': 'Clima'
-        },
-        {'title': sunrise, 'leading': Icons.wb_sunny, 'subtitle': 'Amanecer'},
-        {'title': sunset, 'leading': Icons.bedtime, 'subtitle': 'Anochecer'},
-        {
-          'title': precipitationProbabilityMax,
-          'leading': Icons.water_drop,
-          'subtitle': 'Probabilidad De Precipitaciones'
-        },
-        {
-          'title': precipitationHours,
-          'leading': Icons.water_drop,
-          'subtitle': 'Cantidad de Horas De Precipitaciones'
-        },
+        ClimaCardData(
+            title: temperature,
+            leading: Icons.thermostat,
+            subtitle: 'Temperatura (min/max)'),
+        ClimaCardData(
+            title: apparentTemperature,
+            leading: Icons.thermostat,
+            subtitle: 'Sensación Térmica (min/max)'),
+        ClimaCardData(
+            title: weatherCode!['label'],
+            leading: weatherCode['icon'],
+            subtitle: 'Clima'),
+        ClimaCardData(
+            title: sunrise, leading: Icons.wb_sunny, subtitle: 'Amanecer'),
+        ClimaCardData(
+            title: sunset, leading: Icons.bedtime, subtitle: 'Anochecer'),
+        ClimaCardData(
+            title: precipitationProbabilityMax,
+            leading: Icons.water_drop,
+            subtitle: 'Probabilidad De Precipitaciones'),
+        ClimaCardData(
+            title: precipitationHours,
+            leading: Icons.water_drop,
+            subtitle: 'Cantidad de Horas De Precipitaciones'),
       ]);
     } else if (args['dataType'] == 'horario') {
       final data = pronosticoHorario['data']['hourly'];
@@ -165,31 +149,26 @@ class PronosticoDia extends StatelessWidget {
       final rain = '${data['rain'].toString()}${units['rain']}';
 
       returnData.addAll([
-        {
-          'title': temperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Temperatura'
-        },
-        {
-          'title': apparentTemperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Sensación Térmica'
-        },
-        {
-          'title': weatherCode!['label'],
-          'leading': weatherCode['icon'],
-          'subtitle': 'Clima'
-        },
-        {
-          'title': precipitationProbability,
-          'leading': Icons.water_drop,
-          'subtitle': 'Probabilidad De Precipitaciones'
-        },
-        {
-          'title': rain,
-          'leading': Icons.water_drop,
-          'subtitle': 'Lluvia Última Hora'
-        },
+        ClimaCardData(
+            title: temperature,
+            leading: Icons.thermostat,
+            subtitle: 'Temperatura'),
+        ClimaCardData(
+            title: apparentTemperature,
+            leading: Icons.thermostat,
+            subtitle: 'Sensación Térmica'),
+        ClimaCardData(
+            title: weatherCode!['label'],
+            leading: weatherCode['icon'],
+            subtitle: 'Clima'),
+        ClimaCardData(
+            title: precipitationProbability,
+            leading: Icons.water_drop,
+            subtitle: 'Probabilidad De Precipitaciones'),
+        ClimaCardData(
+            title: rain,
+            leading: Icons.water_drop,
+            subtitle: 'Lluvia Última Hora'),
       ]);
     }
     return returnData;
