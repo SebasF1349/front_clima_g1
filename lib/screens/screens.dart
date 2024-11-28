@@ -4,4 +4,6 @@ export 'package:flutter_application_base/screens/custom_list_screen.dart';
 export 'package:flutter_application_base/screens/home_screen.dart';
 export 'package:flutter_application_base/screens/pronostico.dart';
 export 'package:flutter_application_base/screens/pronostico_unitario.dart';
+export 'package:flutter_application_base/screens/weather_history.dart';
 export 'package:flutter_application_base/screens/buscar_ciudad_screen.dart';
+export 'package:flutter_application_base/screens/history_list.dart';
