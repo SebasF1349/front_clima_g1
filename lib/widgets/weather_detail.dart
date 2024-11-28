@@ -9,12 +9,12 @@ class WeatherDetailsWidget extends StatelessWidget {
   final List<Map<String, dynamic>> weatherDetails;
 
   const WeatherDetailsWidget({
-    Key? key,
+    super.key,
     required this.weatherStateName,
     required this.weatherIcon,
     required this.temperature,
     required this.weatherDetails, // Lista de detalles del clima
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

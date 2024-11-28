@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/models/climate_data.dart';
+import 'package:flutter_application_base/models/weather_code.dart';
 import 'package:flutter_application_base/utils/weather_code_translation.dart'; // Importamos el mapa de códigos de clima
 
 class WeatherUtils {
@@ -64,9 +65,9 @@ class WeatherUtils {
       final predominantCode = getPredominantWeatherCode(dailyWeatherCodes[date]!);
 
       // Usamos directamente el mapa `weatherCodes` para obtener ícono y etiqueta
-      final weatherData = weatherCodes[predominantCode];
-      final weatherIcon = weatherData?['icon'] ?? Icons.help_outline;
-      final weatherLabel = weatherData?['label'] ?? 'Clima desconocido';
+      final WeatherCode? weatherData = weatherCodes[predominantCode]; // Asegúrate de que weatherCodes sea Map<int, WeatherCode>
+      final weatherIcon = weatherData?.icon ?? Icons.help_outline;
+      final weatherLabel = weatherData?.label ?? 'Clima desconocido';
 
       result.add(ClimateData(
         date: date,
