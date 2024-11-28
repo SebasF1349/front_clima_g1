@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/widgets/drawer_menu.dart';
 import 'package:flutter_application_base/widgets/chart.dart';
-import 'package:flutter_application_base/mocks/pronostico_mock.dart'
-    show pronostico;
+import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart'
+    show pronosticoHorario;
 import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
 
@@ -14,16 +14,16 @@ class Pronostico extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     List<double> tempHorario =
-        tempToDouble(pronostico['data']['hourly']['temperature_2m']);
+        tempToDouble(pronosticoHorario.data.hourly.temperature2M);
     List<String> hourLabelsHorario =
-        getHourLabels(pronostico['data']['hourly']['time']);
+        getHourLabels(pronosticoHorario.data.hourly.time);
 
     List<double> tempDiarioMin =
-        tempToDouble(pronosticoDiario['data']['daily']['temperature_2m_min']);
+        tempToDouble(pronosticoDiario.data.daily.temperature2MMin);
     List<double> tempDiarioMax =
-        tempToDouble(pronosticoDiario['data']['daily']['temperature_2m_max']);
+        tempToDouble(pronosticoDiario.data.daily.temperature2MMax);
     List<String> hourLabelsDiario =
-        getDayLabels(pronosticoDiario['data']['daily']['time']);
+        getDayLabels(pronosticoDiario.data.daily.time);
 
     return Scaffold(
       appBar: AppBar(
@@ -64,15 +64,14 @@ class Pronostico extends StatelessWidget {
     );
   }
 
-  List<String> getHourLabels(List<String> labels) {
-    return labels.map((label) {
-      return '${DateTime.parse(label).hour.toString().padLeft(2, "0")}hs';
+  List<String> getHourLabels(List<DateTime> dates) {
+    return dates.map((date) {
+      return '${date.hour.toString().padLeft(2, "0")}hs';
     }).toList();
   }
 
-  List<String> getDayLabels(List<String> labels) {
-    return labels.map((label) {
-      DateTime date = DateTime.parse(label);
+  List<String> getDayLabels(List<DateTime> dates) {
+    return dates.map((date) {
       return '${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}';
     }).toList();
   }
