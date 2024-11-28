@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/models/weather_codes.dart';
+import 'package:flutter_application_base/models/weather_code.dart';
 
 Map<int, WeatherCode> weatherCodes = {
   0: WeatherCode(label: 'Cielo despejado', icon: Icons.wb_sunny),
