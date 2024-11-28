@@ -59,7 +59,7 @@ class WeatherScreen extends StatelessWidget {
   }
 } */
 
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_application_base/widgets/rain_info.dart';
 
 class WeatherDetailsScreen extends StatelessWidget {
@@ -88,6 +88,31 @@ class WeatherDetailsScreen extends StatelessWidget {
               icon: Icons.thermostat,
               value: '20°C',
             ),
+          ],
+        ),
+      ),
+    );
+  }
+} */
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_base/widgets/weather_detail.dart';
+
+class WeatherDetailsScreen extends StatelessWidget {
+  const WeatherDetailsScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Weather App')),
+        body: const WeatherDetailsWidget(
+          weatherStateName: 'Sunny',
+          weatherIcon: Icons.wb_sunny,
+          temperature: 28.0,
+          weatherDetails: [
+            {'title': 'Humidity', 'icon': Icons.water_drop, 'value': '40%'},
+            {'title': 'Pressure', 'icon': Icons.speed, 'value': '1012 hPa'},
           ],
         ),
       ),
