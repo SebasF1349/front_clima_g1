@@ -30,7 +30,7 @@ class WeatherScreen extends StatelessWidget {
   }
 }
  */
-
+/* 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/mocks/pronostico_mock.dart';
 import 'package:flutter_application_base/widgets/climate_item.dart';
@@ -54,6 +54,42 @@ class WeatherScreen extends StatelessWidget {
           final climateData = climateList[index];
           return ClimateItem(climateData: climateData); // Pasas el objeto completo
         },
+      ),
+    );
+  }
+} */
+
+import 'package:flutter/material.dart';
+import 'package:flutter_application_base/widgets/rain_info.dart';
+
+class WeatherDetailsScreen extends StatelessWidget {
+  const WeatherDetailsScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            WeatherInfoWidget(
+              title: 'Wind Speed',
+              icon: Icons.air,
+              value: '7 km/h',
+            ),
+            WeatherInfoWidget(
+              title: 'Humidity',
+              icon: Icons.water_drop,
+              value: '50%',
+            ),
+            WeatherInfoWidget(
+              title: 'Temp',
+              icon: Icons.thermostat,
+              value: '20°C',
+            ),
+          ],
+        ),
       ),
     );
   }
