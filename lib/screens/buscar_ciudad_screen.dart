@@ -25,8 +25,16 @@ class BuscarCiudad extends StatelessWidget {
       ),
       drawer: DrawerMenu(),
       body: const Column(
-        children: [ClimaGifWidget(),]
-      ),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Elegí tu ciudad',
+            style: TextStyle(fontSize: 30, letterSpacing: 2, wordSpacing: 3),
+          ),
+          SizedBox(height: 20),
+          ClimaGifWidget(),
+          ],
+        ),
     );
   }
 }
@@ -37,12 +45,13 @@ class ClimaGifWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-              'assets/gif/solnubegif2.gif',
-              scale: 0.50
+              'assets/gif/clouds.gif',
+              width: 180,
+              height: 180,
         ),
       ],
     );

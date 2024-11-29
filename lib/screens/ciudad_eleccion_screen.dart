@@ -26,19 +26,19 @@ class CiudadSeleccionada extends StatelessWidget {
           longitud: longitud,
           onButton1Pressed: () {
             // Lógica del botón 1
-            Navigator.pushNamed(
+            /*Navigator.pushNamed(
               context,
               '/clima_hoy_futuro',
               arguments: {'latitud': latitud, 'longitud': longitud},
-            );
+            );*/
           },
           onButton2Pressed: () {
             // Lógica del botón 2
-            Navigator.pushNamed(
+            /*Navigator.pushNamed(
               context,
               '/clima_pasado',
               arguments: {'latitud': latitud, 'longitud': longitud},
-            );
+            );*/
           },
         ),
       ),

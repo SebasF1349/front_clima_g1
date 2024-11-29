@@ -45,7 +45,7 @@ flutter:
     - assets/loading.gif
     - assets/images/
     - assets/avatars/
-    - assets/gif/solnubegif2.gif
+    - assets/gif/clouds.gif
     - assets/banderas/
 
 # An image asset can refer to one or more resolution-specific "variants", see
