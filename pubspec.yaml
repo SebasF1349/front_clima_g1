@@ -21,6 +21,7 @@ dependencies:
   shared_preferences: ^2.3.3
   provider: ^6.1.2
   fl_chart: ^0.69.0
+  catppuccin_flutter: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

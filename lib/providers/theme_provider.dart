@@ -1,22 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/themes/default_theme.dart';
+import 'package:flutter_application_base/themes/catppuccin_theme.dart';
+import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeData temaActual;
 
-  ThemeProvider({required bool isDarkMode})
-      : temaActual =
-  (isDarkMode) ? DefaultTheme.darkTheme : DefaultTheme.lightTheme;
+  ThemeProvider({required Flavor flavor})
+      : temaActual = catppuccinTheme(flavor);
 
-  setLight() {
-    print('setLight');
-    temaActual = DefaultTheme.lightTheme;
+  setTheme(Flavor flavor) {
+    temaActual = catppuccinTheme(flavor);
     notifyListeners();
   }
 
-  setDark() {
-    print('setDark');
-    temaActual = DefaultTheme.darkTheme;
+  setLatte() {
+    temaActual = catppuccinTheme(catppuccin.latte);
+    notifyListeners();
+  }
+
+  setFrappe() {
+    temaActual = catppuccinTheme(catppuccin.frappe);
+    notifyListeners();
+  }
+
+  setMacchiato() {
+    temaActual = catppuccinTheme(catppuccin.macchiato);
+    notifyListeners();
+  }
+
+  setMocha() {
+    temaActual = catppuccinTheme(catppuccin.mocha);
     notifyListeners();
   }
 }
