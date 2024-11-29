@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
 import 'package:flutter_application_base/screens/ciudad_eleccion_screen.dart';
+import 'package:flutter_application_base/screens/history_list.dart';
 import 'package:flutter_application_base/screens/screens.dart';
 import 'package:flutter_application_base/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +13,7 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<ThemeProvider>(
-        create: (_) => ThemeProvider(isDarkMode: Preferences.darkmode),
+        create: (_) => ThemeProvider(flavor: Preferences.getTheme()),
       ),
     ],
     child: const MyApp(),
@@ -33,8 +34,9 @@ class MyApp extends StatelessWidget {
           'home': (context) => const HomeScreen(),
           'pronostico': (context) => const Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
+          'weather_history': (context) => const WeatherDetailsScreen(),
           'custom_list': (context) => const CustomListScreen(),
-          'profile': (context) => const ProfileScreen(),
+          'settings': (context) => const Settings(),
           'custom_list_item': (context) => const CustomListItem(),
           'ciudad_seleccionada': (context) => const CiudadSeleccionada(),
           'buscar_ciudad': (context) => const BuscarCiudad(),

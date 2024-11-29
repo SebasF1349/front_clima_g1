@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_base/widgets/mensaje_ciudad.dart';
 
 class CiudadSeleccionada extends StatelessWidget {
-  const CiudadSeleccionada({Key? key}) : super(key: key);
+  const CiudadSeleccionada({super.key});
 
   @override
   Widget build(BuildContext context) {

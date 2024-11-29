@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
-import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart'
-    show pronosticoHorario;
+import 'package:flutter_application_base/mocks/pronostico_hora_mock.dart'
+    show pronosticoHora;
+import 'package:flutter_application_base/models/clima_card_data.dart';
 import 'package:flutter_application_base/utils/weather_code_translation.dart'
     show weatherCodes;
+import 'package:flutter_application_base/widgets/clima_card.dart';
 
 class PronosticoDia extends StatelessWidget {
   const PronosticoDia({super.key});
@@ -73,23 +75,8 @@ class PronosticoDia extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Card(
-              elevation: 1,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ListTile(
-                      leading: Icon(data[index]['leading']),
-                      title: Text(data[index]['title']),
-                      subtitle: Text(data[index]['subtitle']),
-                    );
-                  }),
-            ),
-            Row(
-              children: buttons,
-            )
+            ClimaCard(data: data),
+            Row(children: buttons),
           ],
         ));
   }
@@ -99,97 +86,90 @@ class PronosticoDia extends StatelessWidget {
     return '${dateTime.hour.toString().padLeft(2, "0")}:${dateTime.minute.toString().padLeft(2, "0")}hs';
   }
 
-  List<Map<String, dynamic>> getData(Map<String, dynamic> args) {
-    List<Map<String, dynamic>> returnData = [];
+  List<ClimaCardData> getData(Map<String, dynamic> args) {
+    List<ClimaCardData> returnData = [];
     if (args['dataType'] == 'diario') {
       final dateLabel = args['time'];
       final [day, month] = dateLabel.split('/');
       DateTime now = DateTime.now();
-      final data = pronosticoDiario['data']['daily'];
-      final idx = data['time']
-          .indexWhere((t) => t == '${now.year.toString()}-$month-$day');
-      if (idx == -1) return data;
+      final data = pronosticoDiario.data.daily;
+      final idx = data.time.indexWhere((t) =>
+          t.year == now.year &&
+          t.month.toString().padLeft(2, "0") == month &&
+          t.day.toString().padLeft(2, "0") == day);
+      if (idx == -1) return returnData;
 
-      final units = pronosticoDiario['data']['daily_units'];
+      final units = pronosticoDiario.data.dailyUnits;
       final temperature =
-          '${data['temperature_2m_min'][idx]}${units['temperature_2m_min']}/${data['temperature_2m_max'][idx]}${units['temperature_2m_min']}';
+          '${data.temperature2MMin[idx]}${units.temperature2MMin}/${data.temperature2MMax[idx]}${units.temperature2MMin}';
       final apparentTemperature =
-          '${data['apparent_temperature_min'][idx]}${units['apparent_temperature_min']}/${data['apparent_temperature_max'][idx]}${units['apparent_temperature_max']}';
-      final weatherCode = weatherCodes[data['weather_code'][idx]];
-      final sunrise = getTime(data['sunrise'][idx]);
-      final sunset = getTime(data['sunset'][idx]);
-      final precipitationHours =
-          '${data['precipitation_hours'][idx].toString()}hs';
+          '${data.apparentTemperatureMin[idx]}${units.apparentTemperatureMin}/${data.apparentTemperatureMax[idx]}${units.apparentTemperatureMax}';
+      final weatherCode = weatherCodes[data.weatherCode[idx]]!;
+      final sunrise = getTime(data.sunrise[idx]);
+      final sunset = getTime(data.sunset[idx]);
+      final precipitationHours = '${data.precipitationHours[idx].toString()}hs';
       final precipitationProbabilityMax =
-          '${data['precipitation_probability_max'][idx]}%';
+          '${data.precipitationProbabilityMax[idx]}%';
 
       returnData.addAll([
-        {
-          'title': temperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Temperatura (min/max)'
-        },
-        {
-          'title': apparentTemperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Sensación Térmica (min/max)'
-        },
-        {
-          'title': weatherCode!['label'],
-          'leading': weatherCode['icon'],
-          'subtitle': 'Clima'
-        },
-        {'title': sunrise, 'leading': Icons.wb_sunny, 'subtitle': 'Amanecer'},
-        {'title': sunset, 'leading': Icons.bedtime, 'subtitle': 'Anochecer'},
-        {
-          'title': precipitationProbabilityMax,
-          'leading': Icons.water_drop,
-          'subtitle': 'Probabilidad De Precipitaciones'
-        },
-        {
-          'title': precipitationHours,
-          'leading': Icons.water_drop,
-          'subtitle': 'Cantidad de Horas De Precipitaciones'
-        },
+        ClimaCardData(
+            title: temperature,
+            leading: Icons.thermostat,
+            subtitle: 'Temperatura (min/max)'),
+        ClimaCardData(
+            title: apparentTemperature,
+            leading: Icons.thermostat,
+            subtitle: 'Sensación Térmica (min/max)'),
+        ClimaCardData(
+            title: weatherCode.label,
+            leading: weatherCode.icon,
+            subtitle: 'Clima'),
+        ClimaCardData(
+            title: sunrise, leading: Icons.wb_sunny, subtitle: 'Amanecer'),
+        ClimaCardData(
+            title: sunset, leading: Icons.bedtime, subtitle: 'Anochecer'),
+        ClimaCardData(
+            title: precipitationProbabilityMax,
+            leading: Icons.water_drop,
+            subtitle: 'Probabilidad De Precipitaciones'),
+        ClimaCardData(
+            title: precipitationHours,
+            leading: Icons.water_drop,
+            subtitle: 'Cantidad de Horas De Precipitaciones'),
       ]);
     } else if (args['dataType'] == 'horario') {
-      final data = pronosticoHorario['data']['hourly'];
-      final units = pronosticoHorario['data']['hourly_units'];
+      final data = pronosticoHora.data.hourly;
+      final units = pronosticoHora.data.hourlyUnits;
 
-      final temperature = '${data['temperature_2m']}${units['temperature_2m']}';
+      final temperature = '${data.temperature2M}${units.temperature2M}';
       final apparentTemperature =
-          '${data['apparent_temperature']}${units['apparent_temperature']}';
-      final weatherCode = weatherCodes[data['weather_code']];
+          '${data.apparentTemperature}${units.apparentTemperature}';
+      final weatherCode = weatherCodes[data.weatherCode]!;
       final precipitationProbability =
-          '${data['precipitation_probability']}${units['precipitation_probability']}';
-      final rain = '${data['rain'].toString()}${units['rain']}';
+          '${data.precipitationProbability}${units.precipitationProbability}';
+      final rain = '${data.rain.toString()}${units.rain}';
 
       returnData.addAll([
-        {
-          'title': temperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Temperatura'
-        },
-        {
-          'title': apparentTemperature,
-          'leading': Icons.thermostat,
-          'subtitle': 'Sensación Térmica'
-        },
-        {
-          'title': weatherCode!['label'],
-          'leading': weatherCode['icon'],
-          'subtitle': 'Clima'
-        },
-        {
-          'title': precipitationProbability,
-          'leading': Icons.water_drop,
-          'subtitle': 'Probabilidad De Precipitaciones'
-        },
-        {
-          'title': rain,
-          'leading': Icons.water_drop,
-          'subtitle': 'Lluvia Última Hora'
-        },
+        ClimaCardData(
+            title: temperature,
+            leading: Icons.thermostat,
+            subtitle: 'Temperatura'),
+        ClimaCardData(
+            title: apparentTemperature,
+            leading: Icons.thermostat,
+            subtitle: 'Sensación Térmica'),
+        ClimaCardData(
+            title: weatherCode.label,
+            leading: weatherCode.icon,
+            subtitle: 'Clima'),
+        ClimaCardData(
+            title: precipitationProbability,
+            leading: Icons.water_drop,
+            subtitle: 'Probabilidad De Precipitaciones'),
+        ClimaCardData(
+            title: rain,
+            leading: Icons.water_drop,
+            subtitle: 'Lluvia Última Hora'),
       ]);
     }
     return returnData;
@@ -200,14 +180,14 @@ class PronosticoDia extends StatelessWidget {
       final String dateLabel = args['time'];
       final [day, month] = dateLabel.split('/');
       final DateTime now = DateTime.now();
-      final data = pronosticoDiario['data']['daily'];
-      final int idx = data['time']!
-          .indexWhere((t) => t == '${now.year.toString()}-$month-$day');
-      if (idx == -1 || idx + 1 == data['time']!.length) return '';
-      String dateStr = (idx + 1 == data['time']!.length)
-          ? data['time'][0]
-          : data['time'][idx + 1];
-      DateTime date = DateTime.parse(dateStr);
+      final data = pronosticoDiario.data.daily;
+      final int idx = data.time.indexWhere((t) =>
+          t.year == now.year &&
+          t.month.toString().padLeft(2, "0") == month &&
+          t.day.toString().padLeft(2, "0") == day);
+      if (idx == -1 || idx + 1 == data.time.length) return '';
+      DateTime date =
+          (idx + 1 == data.time.length) ? data.time[0] : data.time[idx + 1];
       return '${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}';
     } else if (args['dataType'] == 'horario') {
       final String timeLabel = args['time'];
@@ -223,12 +203,13 @@ class PronosticoDia extends StatelessWidget {
       final String dateLabel = args['time'];
       final [day, month] = dateLabel.split('/');
       DateTime now = DateTime.now();
-      final data = pronosticoDiario['data']['daily'];
-      final int idx = data['time']
-          .indexWhere((t) => t == '${now.year.toString()}-$month-$day');
+      final data = pronosticoDiario.data.daily;
+      final int idx = data.time.indexWhere((t) =>
+          t.year == now.year &&
+          t.month.toString().padLeft(2, "0") == month &&
+          t.day.toString().padLeft(2, "0") == day);
       if (idx == -1 || idx == 0) return '';
-      String dateStr = (idx == 0) ? data['time'].last : data['time'][idx - 1];
-      DateTime date = DateTime.parse(dateStr);
+      DateTime date = (idx == 0) ? data.time.last : data.time[idx - 1];
       return '${date.day.toString().padLeft(2, "0")}/${date.month.toString().padLeft(2, "0")}';
     } else if (args['dataType'] == 'horario') {
       final String timeLabel = args['time'];

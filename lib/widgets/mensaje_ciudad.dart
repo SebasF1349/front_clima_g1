@@ -9,14 +9,14 @@ class CiudadCardWidget extends StatelessWidget {
   final VoidCallback onButton2Pressed;
 
   const CiudadCardWidget({
-    Key? key,
+    super.key,
     required this.ciudadNombre,
     required this.countryCode,
     required this.latitud,
     required this.longitud,
     required this.onButton1Pressed,
     required this.onButton2Pressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
