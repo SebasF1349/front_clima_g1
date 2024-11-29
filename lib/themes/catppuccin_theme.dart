@@ -4,8 +4,16 @@ import 'package:flutter/material.dart';
 ThemeData catppuccinTheme(Flavor flavor) {
   Color primaryColor = flavor.mauve;
   Color secondaryColor = flavor.pink;
+
+  Brightness brightness =
+      flavor == catppuccin.latte || flavor == catppuccin.frappe
+          ? Brightness.light
+          : Brightness
+              .dark; // Asumimos que los temas claros tienen 'Brightness.light'
+
   return ThemeData(
       useMaterial3: true,
+      brightness: brightness,
       appBarTheme: AppBarTheme(
           elevation: 0,
           titleTextStyle: TextStyle(
@@ -14,7 +22,7 @@ ThemeData catppuccinTheme(Flavor flavor) {
           foregroundColor: flavor.mantle),
       colorScheme: ColorScheme(
         background: flavor.base,
-        brightness: Brightness.light,
+        brightness: brightness,
         error: flavor.surface2,
         onBackground: flavor.text,
         onError: flavor.red,
