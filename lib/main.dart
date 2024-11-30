@@ -22,6 +22,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         initialRoute: 'home',
         theme: tema.temaActual,
         routes: {
-          'home': (context) => const HomeScreen(),
+          'home': (context) => Preferences.city == '' ? const BuscarCiudad() : const Pronostico(),
           'pronostico': (context) => const Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
           'weather_history_list': (context) => WeatherScreenList(),

@@ -11,7 +11,7 @@ class DrawerMenu extends StatelessWidget {
     {
       'route': 'buscar_ciudad',
       'title': 'Buscar ciudad',
-      'subtitle': 'valentina',
+      'subtitle': '',
       'icon': Icons.search
     },
     {

@@ -9,6 +9,9 @@ class Preferences {
   static double _latitude = 0.0;
   static double _longitude = 0.0;
   static String _city = '';
+  static String _provincia = '';
+  static String _country = '';
+  static String _timezone = '';
   static late SharedPreferences _prefs;
 
   static Future<void> initShared() async {
@@ -67,6 +70,33 @@ class Preferences {
   static set city(String value) {
     _city = value;
     _prefs.setString('city', value);
+  }
+
+  static String get provincia {
+    return _prefs.getString('provincia') ?? _provincia;
+  }
+
+  static set provincia(String value) {
+    _provincia = value;
+    _prefs.setString('provincia', value);
+  }
+
+  static String get country {
+    return _prefs.getString('country') ?? _country;
+  }
+
+  static set country(String value) {
+    _country = value;
+    _prefs.setString('country', value);
+  }
+
+  static String get timezone {
+    return _prefs.getString('timezone') ?? _timezone;
+  }
+
+  static set timezone(String value) {
+    _timezone = value;
+    _prefs.setString('timezone', value);
   }
 
   static Flavor getTheme() {
