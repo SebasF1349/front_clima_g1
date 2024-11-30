@@ -20,14 +20,12 @@ class WeatherDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Widget ClimateCard
         ClimateCard(
           weatherStateName: weatherStateName,
           weatherIcon: weatherIcon,
           temperature: temperature,
         ),
         const SizedBox(height: 16),
-        // Información adicional del clima
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(

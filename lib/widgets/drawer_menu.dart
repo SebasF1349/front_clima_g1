@@ -14,7 +14,7 @@ class DrawerMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      backgroundColor: Theme.of(context).drawerTheme.backgroundColor, // Usando el color del tema
+      backgroundColor: Theme.of(context).drawerTheme.backgroundColor,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -29,7 +29,7 @@ class DrawerMenu extends StatelessWidget {
                 item['title']!,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: Theme.of(context).secondaryHeaderColor, // Color del tema
+                  color: Theme.of(context).secondaryHeaderColor,
                 ),
               ),
               subtitle: Text(

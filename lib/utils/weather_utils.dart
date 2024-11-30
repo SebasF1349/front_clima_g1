@@ -31,12 +31,10 @@ class WeatherUtils {
   return sum / temperatures.length;
   }
     static List<double> getHourlyTemperatures(HourlyForecast pronosticoHistorial) {
-      // Extrae la lista de temperaturas de la hora 2M
       return pronosticoHistorial.data.hourly.temperature2M;
     }
 
     static List<DateTime> getHourlyTimes(HourlyForecast pronosticoHistorial) {
-      // Extrae las horas de los datos y las devuelve como una lista de DateTime
       return pronosticoHistorial.data.hourly.time.map((dateTime) {
         return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
       }).toList();
