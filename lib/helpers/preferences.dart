@@ -19,7 +19,7 @@ class Preferences {
   }
 
   static Flavor getTheme() {
-    return switch (_theme) {
+    return switch (_prefs.getString('theme')) {
       'latte' => catppuccin.latte,
       'frappe' => catppuccin.frappe,
       'macchiato' => catppuccin.macchiato,

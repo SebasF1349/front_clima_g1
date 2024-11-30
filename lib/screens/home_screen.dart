@@ -11,9 +11,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
-        centerTitle: true,
-        leadingWidth: 40,
-        toolbarHeight: 80,
       ),
       drawer: DrawerMenu(),
       body: const Center(child: Text('Hola mundo')),

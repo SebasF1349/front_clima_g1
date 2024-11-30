@@ -28,9 +28,6 @@ class Pronostico extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pronóstico'),
-        centerTitle: true,
-        leadingWidth: 40,
-        toolbarHeight: 80,
       ),
       drawer: DrawerMenu(),
       body: ListView(children: [
