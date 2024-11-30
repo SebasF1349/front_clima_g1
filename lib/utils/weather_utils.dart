@@ -21,6 +21,16 @@ class WeatherUtils {
     return {'maxTemp': maxTemp, 'minTemp': minTemp};
   }
 
+  static double calculateAverageTemperature(List<double> temperatures) {
+  if (temperatures.isEmpty) {
+    throw ArgumentError("La lista de temperaturas no puede estar vacía.");
+  }
+
+  final sum = temperatures.reduce((a, b) => a + b);
+  return sum / temperatures.length;
+}
+
+
   /// Función para obtener el código de clima predominante
   static int getPredominantWeatherCode(List<int> weatherCodes) {
     final Map<int, int> weatherCodeCount = {};
@@ -42,18 +52,16 @@ class WeatherUtils {
   }
 
   /// Función para procesar los datos del mock y devolver una lista de ClimateData
-  static List<ClimateData> processWeatherData(Map<String, dynamic> pronostico) {
-    final List<String> times = pronostico['data']['hourly']['time'].cast<String>();
-    final List<double> temperatures =
-        pronostico['data']['hourly']['temperature_2m'].cast<double>();
-    final List<int> weatherCodesList =
-        pronostico['data']['hourly']['weather_code'].cast<int>();
+  static List<ClimateData> processWeatherData(dynamic pronostico) {
+    final List<DateTime> times = pronostico.data.hourly.time;
+    final List<double> temperatures = pronostico.data.hourly.temperature2M;
+    final List<int> weatherCodesList = pronostico.data.hourly.weatherCode;
 
     final Map<String, List<double>> dailyTemperatures = {};
     final Map<String, List<int>> dailyWeatherCodes = {};
 
     for (int i = 0; i < times.length; i++) {
-      final String date = times[i].split('T')[0];
+      final String date = times[i].toIso8601String().split('T')[0];
       dailyTemperatures.putIfAbsent(date, () => []).add(temperatures[i]);
       dailyWeatherCodes.putIfAbsent(date, () => []).add(weatherCodesList[i]);
     }
@@ -63,9 +71,10 @@ class WeatherUtils {
       final maxTemp = getDayTemperatureRange(temps)['maxTemp']!;
       final minTemp = getDayTemperatureRange(temps)['minTemp']!;
       final predominantCode = getPredominantWeatherCode(dailyWeatherCodes[date]!);
+      final dailyAverageTemp = calculateAverageTemperature(temperatures);
 
-      // Usamos directamente el mapa `weatherCodes` para obtener ícono y etiqueta
-      final WeatherCode? weatherData = weatherCodes[predominantCode]; // Asegúrate de que weatherCodes sea Map<int, WeatherCode>
+      // Usamos directamente el mapa weatherCodes para obtener ícono y etiqueta
+      final WeatherCode? weatherData = weatherCodes[predominantCode];
       final weatherIcon = weatherData?.icon ?? Icons.help_outline;
       final weatherLabel = weatherData?.label ?? 'Clima desconocido';
 
@@ -73,6 +82,7 @@ class WeatherUtils {
         date: date,
         maxTemp: maxTemp,
         minTemp: minTemp,
+        avgTemp: dailyAverageTemp,
         weatherIcon: weatherIcon,
         weatherLabel: weatherLabel,
       ));

@@ -28,7 +28,7 @@ class ClimateItem extends StatelessWidget {
               ],
             ),
             Icon(
-              climateData.weatherIcon, // Ahora usas el icono directamente desde ClimateData
+              climateData.weatherIcon,
               size: 40,
               color: Colors.blue,
             ),

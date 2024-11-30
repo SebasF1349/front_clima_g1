@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'climate_card.dart'; // Archivo separado
-import 'rain_info.dart'; // Archivo separado
+import 'climate_card.dart';
+import 'rain_info.dart';
 
 class WeatherDetailsWidget extends StatelessWidget {
   final String weatherStateName;
@@ -13,7 +13,7 @@ class WeatherDetailsWidget extends StatelessWidget {
     required this.weatherStateName,
     required this.weatherIcon,
     required this.temperature,
-    required this.weatherDetails, // Lista de detalles del clima
+    required this.weatherDetails,
   });
 
   @override

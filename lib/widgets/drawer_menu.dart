@@ -9,9 +9,8 @@ class DrawerMenu extends StatelessWidget {
       'subtitle': 'valentina'
     },
     {'route': 'home', 'title': 'Home', 'subtitle': 'Home + counter app'},
-    {'route': 'custom_list', 'title': 'Custom list', 'subtitle': ''},
+    {'route': 'weather_history_list', 'title': 'Historial Clima', 'subtitle': ''},
     {'route': 'settings', 'title': 'Configuración', 'subtitle': ''},
-    {'route': 'weather_history', 'title': 'historial', 'subtitle': ''}
   ];
 
   DrawerMenu({super.key});
