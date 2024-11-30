@@ -9,7 +9,6 @@ class ClimaCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1,
       child: ListView.builder(
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),

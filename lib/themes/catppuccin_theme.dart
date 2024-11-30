@@ -26,7 +26,11 @@ ThemeData catppuccinTheme(Flavor flavor) {
       iconTheme: IconThemeData(color: flavor.pink),
       listTileTheme: ListTileThemeData(iconColor: primaryColor),
       elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(foregroundColor: primaryColor)),
+          style: ElevatedButton.styleFrom(
+              backgroundColor: flavor.surface1,
+              foregroundColor: primaryColor,
+              elevation: 3)),
+      cardTheme: CardTheme(color: flavor.surface1, elevation: 3),
       colorScheme: ColorScheme(
         background: flavor.base,
         brightness: brightness,
