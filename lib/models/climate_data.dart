@@ -9,6 +9,8 @@ class ClimateData {
   final String weatherLabel;
   final double? windSpeed;
   final double? rain;
+  final List<double> hourlyTemperatures;
+  final List<DateTime> hourlyTimes;
 
   ClimateData({
     required this.date,
@@ -19,5 +21,7 @@ class ClimateData {
     required this.weatherLabel,
     this.windSpeed,
     this.rain,
+    required this.hourlyTemperatures,
+    required this.hourlyTimes,
   });
 }

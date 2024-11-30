@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/models/climate_data.dart';
+import 'package:flutter_application_base/models/hourly_forecast_model.dart';
 import 'package:flutter_application_base/models/weather_code.dart';
-import 'package:flutter_application_base/utils/weather_code_translation.dart'; // Importamos el mapa de códigos de clima
+import 'package:flutter_application_base/utils/weather_code_translation.dart';
 
 class WeatherUtils {
   /// Función para determinar el máximo y el mínimo de temperatura de un día
@@ -28,7 +29,18 @@ class WeatherUtils {
 
   final sum = temperatures.reduce((a, b) => a + b);
   return sum / temperatures.length;
-}
+  }
+    static List<double> getHourlyTemperatures(HourlyForecast pronosticoHistorial) {
+      // Extrae la lista de temperaturas de la hora 2M
+      return pronosticoHistorial.data.hourly.temperature2M;
+    }
+
+    static List<DateTime> getHourlyTimes(HourlyForecast pronosticoHistorial) {
+      // Extrae las horas de los datos y las devuelve como una lista de DateTime
+      return pronosticoHistorial.data.hourly.time.map((dateTime) {
+        return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
+      }).toList();
+    }
 
 
   /// Función para obtener el código de clima predominante
@@ -72,6 +84,9 @@ class WeatherUtils {
       final minTemp = getDayTemperatureRange(temps)['minTemp']!;
       final predominantCode = getPredominantWeatherCode(dailyWeatherCodes[date]!);
       final dailyAverageTemp = calculateAverageTemperature(temperatures);
+      final hourlyTemperatures = getHourlyTemperatures(pronostico);
+      final hourlyTimes = getHourlyTimes(pronostico);
+
 
       // Usamos directamente el mapa weatherCodes para obtener ícono y etiqueta
       final WeatherCode? weatherData = weatherCodes[predominantCode];
@@ -84,7 +99,9 @@ class WeatherUtils {
         minTemp: minTemp,
         avgTemp: dailyAverageTemp,
         weatherIcon: weatherIcon,
-        weatherLabel: weatherLabel,
+        weatherLabel: weatherLabel, 
+        hourlyTemperatures: hourlyTemperatures,
+        hourlyTimes: hourlyTimes,
       ));
     });
 
