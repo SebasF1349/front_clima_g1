@@ -36,7 +36,6 @@ class ClimateCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          // Ícono del clima
           Positioned(
             top: 10,
             left: 20,
@@ -46,7 +45,6 @@ class ClimateCard extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          // Nombre del estado del clima
           Positioned(
             bottom: 20,
             left: 20,
@@ -59,7 +57,6 @@ class ClimateCard extends StatelessWidget {
               ),
             ),
           ),
-          // Temperatura
           Positioned(
             top: 20,
             right: 20,
