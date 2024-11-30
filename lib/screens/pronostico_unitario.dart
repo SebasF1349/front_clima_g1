@@ -16,7 +16,6 @@ class PronosticoDia extends StatelessWidget {
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final size = MediaQuery.of(context).size;
     final data = getData(args);
     final next = getNext(args);
     final prev = getPrev(args);

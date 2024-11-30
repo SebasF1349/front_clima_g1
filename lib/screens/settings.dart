@@ -17,10 +17,10 @@ class Settings extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeaderProfile(size: size),
+            HeaderSettings(size: size),
             const Padding(
               padding: EdgeInsets.all(15.0),
-              child: BodyProfile(),
+              child: BodySettings(),
             ),
           ],
         ),
@@ -29,10 +29,10 @@ class Settings extends StatelessWidget {
   }
 }
 
-class BodyProfile extends StatelessWidget {
+class BodySettings extends StatelessWidget {
   final bool darkMode = false;
 
-  const BodyProfile({
+  const BodySettings({
     super.key,
   });
 
@@ -40,7 +40,7 @@ class BodyProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        SelectTheme(),
+        Options(),
         SizedBox(
           height: 15,
         ),
@@ -49,39 +49,150 @@ class BodyProfile extends StatelessWidget {
   }
 }
 
-class SelectTheme extends StatefulWidget {
-  const SelectTheme({super.key});
+class Options extends StatefulWidget {
+  const Options({super.key});
 
   @override
-  State<SelectTheme> createState() => _SelectThemeState();
+  State<Options> createState() => _OptionsState();
 }
 
-const List<String> themes = <String>['latte', 'frappe', 'macchiato', 'mocha'];
+const List<String> themes = <String>[
+  'latte',
+  'frappe',
+  'macchiato',
+  'mocha',
+];
 
-class _SelectThemeState extends State<SelectTheme> {
+class _OptionsState extends State<Options> {
   String theme = themes.last;
+  List<String> timezones = [for (var i = -12; i <= 14; i += 1) i.toString()];
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     final temaProvider = Provider.of<ThemeProvider>(context, listen: false);
-    return DropdownMenu<String>(
-      initialSelection: Preferences.theme,
-      onSelected: (String? value) {
-        setState(() {
-          Preferences.theme = value!;
-          temaProvider.setTheme(Preferences.getTheme());
-        });
-      },
-      dropdownMenuEntries:
-          themes.map<DropdownMenuEntry<String>>((String value) {
-        return DropdownMenuEntry<String>(value: value, label: value);
-      }).toList(),
+    timezones.insert(0, 'Ciudad Elegida');
+    timezones.insert(1, 'Sistema');
+
+    return Column(
+      children: [
+        createDropdownMenu(
+            'Tema',
+            DropdownMenu<String>(
+              width: size.width * 9 / 20,
+              initialSelection: Preferences.theme,
+              onSelected: (String? value) {
+                setState(() {
+                  Preferences.theme = value!;
+                  temaProvider.setTheme(Preferences.getTheme());
+                });
+              },
+              dropdownMenuEntries: [...themes, 'sistema']
+                  .map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
+            )),
+        if (Preferences.theme == 'sistema')
+          createDropdownMenu(
+            'Tema Oscuro',
+            DropdownMenu<String>(
+              width: size.width * 9 / 20,
+              initialSelection: Preferences.darkTheme,
+              onSelected: (String? value) {
+                setState(() {
+                  Preferences.darkTheme = value!;
+                  temaProvider.setTheme(Preferences.getTheme());
+                });
+              },
+              dropdownMenuEntries:
+                  themes.map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
+            ),
+          ),
+        if (Preferences.theme == 'sistema')
+          createDropdownMenu(
+            'Tema Claro',
+            DropdownMenu<String>(
+              width: size.width * 9 / 20,
+              initialSelection: Preferences.lightTheme,
+              onSelected: (String? value) {
+                setState(() {
+                  Preferences.lightTheme = value!;
+                  temaProvider.setTheme(Preferences.getTheme());
+                });
+              },
+              dropdownMenuEntries:
+                  themes.map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry<String>(value: value, label: value);
+              }).toList(),
+            ),
+          ),
+        SizedBox(
+          height: 80,
+          child: InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, 'buscar_ciudad');
+            },
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(children: [
+                  Text(
+                    'Cambiar Ciudad',
+                    textScaler: TextScaler.linear(1.3),
+                  ),
+                ]),
+              ),
+            ),
+          ),
+        ),
+        createDropdownMenu(
+          'Zona Horaria',
+          DropdownMenu<String>(
+            width: size.width * 9 / 20,
+            initialSelection: timezones.first,
+            // onSelected: (String? value) {
+            // setState(() {
+            //   Preferences.theme = value!;
+            //   temaProvider.setTheme(Preferences.getTheme());
+            // });
+            // },
+            dropdownMenuEntries:
+                timezones.map<DropdownMenuEntry<String>>((String value) {
+              return DropdownMenuEntry<String>(value: value, label: value);
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget createDropdownMenu(String label, DropdownMenu<String> dropdownMenu) {
+    return SizedBox(
+      height: 80,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Text(
+                label,
+                textScaler: TextScaler.linear(1.3),
+              ),
+              Spacer(),
+              dropdownMenu,
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
 
-class HeaderProfile extends StatelessWidget {
-  const HeaderProfile({
+class HeaderSettings extends StatelessWidget {
+  const HeaderSettings({
     super.key,
     required this.size,
   });
