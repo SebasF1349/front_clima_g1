@@ -31,7 +31,6 @@ class DrawerMenu extends StatelessWidget {
                             vertical: 0, horizontal: 10),
                         dense: true,
                         minLeadingWidth: 25,
-                        iconColor: Colors.blueGrey,
                         title: Text(item['title']!,
                             style: const TextStyle(fontFamily: 'FuzzyBubbles')),
                         subtitle: Text(item['subtitle'] ?? '',
@@ -112,8 +111,7 @@ class _DrawerHeaderAlternative extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: const Text(
             '[  Menu  ]',
-            style: TextStyle(
-                fontSize: 13, color: Colors.black54, fontFamily: 'RobotoMono'),
+            style: TextStyle(fontSize: 13, fontFamily: 'RobotoMono'),
             textAlign: TextAlign.right,
           ),
         ),
