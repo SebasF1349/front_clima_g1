@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/preferences.dart';
 import 'package:flutter_application_base/mocks/ciudad_mock.dart' show listaCiudades;
 
 class CiudadSearchDelegate extends SearchDelegate {
@@ -60,18 +61,26 @@ class CiudadSearchDelegate extends SearchDelegate {
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           subtitle: Text(city['admin1']!),
-          onTap: () {//SCREEN MENSAJE DE PREGUNTA
-            Navigator.pushNamed(context, 'ciudad_seleccionada',
-              arguments: <String, dynamic>{
-                'name': city['name'],
-                'country_code': city['country_code'],
-                'latitude': city['latitude'],
-                'longitude': city['longitude'],
-              }
-            );
+          onTap: () async {
+            try{
+                Preferences.city = city['name']!;
+                Preferences.latitude = city['latitude']!;
+                Preferences.longitude = city['longitude']!;
+                Navigator.pushNamed(context, 'ciudad_seleccionada',
+                  arguments: <String, dynamic>{
+                    'country_code': city['country_code'],
+                  }
+                );
+            } catch (e) {
+                print('Error al procesar la ciudad seleccionada: $e');
+                ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Error al procesar la ciudad seleccionada')),
+              );
+            }
           }
         );
       },
     );
+
   }
 }
