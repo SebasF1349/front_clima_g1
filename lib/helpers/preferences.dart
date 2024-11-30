@@ -40,6 +40,7 @@ class Preferences {
   static set lightTheme(String value) {
     _lightTheme = value;
     _prefs.setString('light_theme', value);
+  }
 
   static double get latitude {
     return _prefs.getDouble('latitude') ?? _latitude;
