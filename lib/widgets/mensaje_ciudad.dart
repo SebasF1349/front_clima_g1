@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/preferences.dart';
 
 class CiudadCardWidget extends StatelessWidget {
-  final String ciudadNombre;
+  late String ciudadNombre = Preferences.city;
   final String countryCode;
-  final double latitud;
-  final double longitud;
+  late double latitud = Preferences.latitude;
+  late double longitud = Preferences.longitude;
   final VoidCallback onButton1Pressed;
   final VoidCallback onButton2Pressed;
 
-  const CiudadCardWidget({
+  CiudadCardWidget({
     super.key,
     required this.ciudadNombre,
     required this.countryCode,
-    required this.latitud,
-    required this.longitud,
     required this.onButton1Pressed,
     required this.onButton2Pressed,
   });

@@ -6,6 +6,9 @@ class Preferences {
   static String _theme = 'mocha';
   static String _darkTheme = 'mocha';
   static String _lightTheme = 'latte';
+  static double _latitude = 0.0;
+  static double _longitude = 0.0;
+  static String _city = '';
   static late SharedPreferences _prefs;
 
   static Future<void> initShared() async {
@@ -37,6 +40,32 @@ class Preferences {
   static set lightTheme(String value) {
     _lightTheme = value;
     _prefs.setString('light_theme', value);
+
+  static double get latitude {
+    return _prefs.getDouble('latitude') ?? _latitude;
+  }
+
+  static set latitude(double value) {
+    _latitude = value;
+    _prefs.setDouble('latitude', value);
+  }
+
+  static double get longitude {
+    return _prefs.getDouble('longitude') ?? _longitude;
+  }
+
+  static set longitude(double value) {
+    _longitude = value;
+    _prefs.setDouble('longitude', value);
+  }
+
+  static String get city {
+    return _prefs.getString('city') ?? _city;
+  }
+
+  static set city(String value) {
+    _city = value;
+    _prefs.setString('city', value);
   }
 
   static Flavor getTheme() {

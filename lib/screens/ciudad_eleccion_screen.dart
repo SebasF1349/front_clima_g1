@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/preferences.dart';
 import 'package:flutter_application_base/widgets/mensaje_ciudad.dart';
 
 class CiudadSeleccionada extends StatelessWidget {
@@ -9,10 +10,8 @@ class CiudadSeleccionada extends StatelessWidget {
     final Map<String, dynamic> arguments =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
-    final ciudadNombre = arguments['name'] as String;
+    final ciudadNombre = Preferences.city;
     final countryCode = arguments['country_code'] as String;
-    final latitud = arguments['latitude'] as double;
-    final longitud = arguments['longitude'] as double;
 
     return Scaffold(
       appBar: AppBar(
@@ -22,23 +21,17 @@ class CiudadSeleccionada extends StatelessWidget {
         child: CiudadCardWidget(
           ciudadNombre: ciudadNombre,
           countryCode: countryCode,
-          latitud: latitud,
-          longitud: longitud,
           onButton1Pressed: () {
-            // Lógica del botón 1
-            /*Navigator.pushNamed(
+            Navigator.pushNamed(
               context,
-              '/clima_hoy_futuro',
-              arguments: {'latitud': latitud, 'longitud': longitud},
-            );*/
+              'pronostico',
+            );
           },
           onButton2Pressed: () {
-            // Lógica del botón 2
-            /*Navigator.pushNamed(
+            Navigator.pushNamed(
               context,
-              '/clima_pasado',
-              arguments: {'latitud': latitud, 'longitud': longitud},
-            );*/
+              'weather_history_list',
+            );
           },
         ),
       ),
