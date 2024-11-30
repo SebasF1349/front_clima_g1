@@ -2,11 +2,36 @@ import 'package:flutter/material.dart';
 
 class DrawerMenu extends StatelessWidget {
   final List<Map<String, dynamic>> _menuItems = <Map<String, dynamic>>[
-    {'route': 'pronostico', 'title': 'Pronóstico', 'subtitle': '', 'icon': Icons.cloud},
-    {'route': 'buscar_ciudad', 'title': 'Buscar ciudad', 'subtitle': '', 'icon': Icons.search},
-    {'route': 'home', 'title': 'Home', 'subtitle': 'Home + counter app', 'icon': Icons.home},
-    {'route': 'weather_history_list', 'title': 'Historial Clima', 'subtitle': '', 'icon': Icons.history},
-    {'route': 'settings', 'title': 'Configuración', 'subtitle': '', 'icon': Icons.settings},
+    {
+      'route': 'pronostico',
+      'title': 'Pronóstico',
+      'subtitle': '',
+      'icon': Icons.cloud
+    },
+    {
+      'route': 'buscar_ciudad',
+      'title': 'Buscar ciudad',
+      'subtitle': '',
+      'icon': Icons.search
+    },
+    {
+      'route': 'home',
+      'title': 'Home',
+      'subtitle': 'Home + counter app',
+      'icon': Icons.home
+    },
+    {
+      'route': 'weather_history_list',
+      'title': 'Historial Clima',
+      'subtitle': '',
+      'icon': Icons.history
+    },
+    {
+      'route': 'settings',
+      'title': 'Configuración',
+      'subtitle': '',
+      'icon': Icons.settings
+    },
   ];
 
   DrawerMenu({super.key});
@@ -22,30 +47,36 @@ class DrawerMenu extends StatelessWidget {
           ...ListTile.divideTiles(
             context: context,
             tiles: _menuItems.map((item) => ListTile(
-              contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              dense: true,
-              minLeadingWidth: 25,
-              title: Text(
-                item['title']!,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).secondaryHeaderColor,
-                ),
-              ),
-              subtitle: Text(
-                item['subtitle'] ?? '',
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Theme.of(context).secondaryHeaderColor,
-                ),
-              ),
-              leading: Icon(item['icon'] as IconData, color: Theme.of(context).primaryColor),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pushNamed(context, item['route']!);
-              },
-            )),
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                  dense: true,
+                  minLeadingWidth: 25,
+                  title: Text(
+                    item['title']!,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                  ),
+                  subtitle: Text(
+                    item['subtitle'] ?? '',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).secondaryHeaderColor,
+                        ),
+                  ),
+                  leading: Icon(item['icon'] as IconData,
+                      color: Theme.of(context).primaryColor),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, item['route']!);
+                  },
+                )),
           ),
-          Divider(color: Theme.of(context).dividerColor, thickness: 1, indent: 10, endIndent: 10),
+          Divider(
+              color: Theme.of(context).dividerColor,
+              thickness: 1,
+              indent: 10,
+              endIndent: 10),
         ],
       ),
     );
@@ -75,9 +106,9 @@ class _DrawerHeaderAlternative extends StatelessWidget {
           Text(
             'Bienvenido!',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           const Text(
             'Explora las opciones del menú',

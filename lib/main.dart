@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/background_detector.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
 import 'package:flutter_application_base/screens/ciudad_eleccion_screen.dart';
 import 'package:flutter_application_base/screens/screens.dart';
@@ -15,7 +16,7 @@ void main() async {
         create: (_) => ThemeProvider(flavor: Preferences.getTheme()),
       ),
     ],
-    child: const MyApp(),
+    child: const BackgroundDetector(child: MyApp()),
   ));
 }
 
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tema = Provider.of<ThemeProvider>(context, listen: true);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: 'home',
@@ -38,7 +40,6 @@ class MyApp extends StatelessWidget {
           'settings': (context) => const Settings(),
           'ciudad_seleccionada': (context) => const CiudadSeleccionada(),
           'buscar_ciudad': (context) => const BuscarCiudad(),
-        }
-        );
+        });
   }
 }
