@@ -15,9 +15,7 @@ class CustomListItem extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text('CustomListItem'),
-        elevation: 10,
       ),
       body: SingleChildScrollView(
         child: Column(

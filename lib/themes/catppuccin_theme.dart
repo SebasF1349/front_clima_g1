@@ -8,18 +8,25 @@ ThemeData catppuccinTheme(Flavor flavor) {
   Brightness brightness =
       flavor == catppuccin.latte || flavor == catppuccin.frappe
           ? Brightness.light
-          : Brightness
-              .dark; // Asumimos que los temas claros tienen 'Brightness.light'
+          : Brightness.dark;
 
   return ThemeData(
       useMaterial3: true,
       brightness: brightness,
       appBarTheme: AppBarTheme(
-          elevation: 0,
-          titleTextStyle: TextStyle(
-              color: flavor.text, fontSize: 20, fontWeight: FontWeight.bold),
-          backgroundColor: flavor.crust,
-          foregroundColor: flavor.mantle),
+        iconTheme: IconThemeData(color: flavor.text),
+        elevation: 10,
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+            color: flavor.text, fontSize: 20, fontWeight: FontWeight.bold),
+        backgroundColor: flavor.crust,
+        foregroundColor: flavor.mantle,
+        toolbarHeight: 80,
+      ),
+      iconTheme: IconThemeData(color: flavor.pink),
+      listTileTheme: ListTileThemeData(iconColor: primaryColor),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(foregroundColor: primaryColor)),
       colorScheme: ColorScheme(
         background: flavor.base,
         brightness: brightness,
