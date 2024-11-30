@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/themes/catppuccin_colors.dart';
 
 class Chart extends StatelessWidget {
   final String type;
@@ -16,9 +17,11 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Map<String, Color> colors = catppuccinColors();
+
     List<LineChartBarData> chartData = [];
-    chartData.add(getSpots(min));
-    if (max != null) chartData.add(getSpots(max!));
+    chartData.add(getSpots(min, colors['blue']!));
+    if (max != null) chartData.add(getSpots(max!, colors['maroon']!));
     List<ShowingTooltipIndicators> tooltipIndicators =
         chartData[0].spots.asMap().entries.map((entry) {
       if (chartData.length == 1) {
@@ -35,38 +38,31 @@ class Chart extends StatelessWidget {
     double maxX = labels.length - 0.5;
     double width = maxX * 80;
     double height = 100;
-    // var {'min': globalMin, 'max': globalMax} = getMaxMin([min, max ?? []]);
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
           height: height,
           width: width,
-          // padding: const EdgeInsets.all(8),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               child: LineChart(
                 LineChartData(
-                    // clipData: const FlClipData.all(),
                     showingTooltipIndicators: tooltipIndicators,
-                    // minY: globalMin,
-                    // maxY: globalMax + 10,
                     minX: -0.5,
                     maxX: maxX,
-                    // gridData: const FlGridData(show: false),
                     gridData: FlGridData(
                       show: true,
                       drawHorizontalLine: false,
                       verticalInterval: 1.0,
                       getDrawingVerticalLine: (value) {
-                        return const FlLine(
-                          color: Colors.grey,
+                        return FlLine(
+                          color: colors['surface1'],
                           strokeWidth: 1,
                         );
                       },
                     ),
-                    // borderData: FlBorderData(show: false),
                     titlesData: FlTitlesData(
                         rightTitles: const AxisTitles(
                           sideTitles: SideTitles(showTitles: false),
@@ -122,26 +118,18 @@ class Chart extends StatelessWidget {
                         },
                         touchTooltipData: LineTouchTooltipData(
                             fitInsideVertically: true,
-                            // showOnTopOfTheChartBoxArea: true,
                             tooltipMargin: 5,
                             getTooltipColor: (touchedSpot) {
-                              // print(touchedSpot.spotIndex);
-                              // print(touchedSpot);
-                              return Colors.lightGreenAccent;
-                              // return LinearGradient(
-                              //   begin: Alignment.topRight,
-                              //   end: Alignment.bottomLeft,
-                              //   colors: [
-                              //     Colors.blue,
-                              //     Colors.red,
-                              //   ],
-                              // );
+                              return colors['surface1']!;
                             },
                             getTooltipItems: (lineBarsSpot) {
                               return lineBarsSpot.indexed.map((spot) {
                                 final (index, value) = spot;
-                                Color color =
-                                    (index == 0) ? Colors.red : Colors.blue;
+                                Color color = (max == null)
+                                    ? colors['blue']!
+                                    : (index == 0)
+                                        ? colors['maroon']!
+                                        : colors['blue']!;
                                 return LineTooltipItem(
                                   value.y.toStringAsFixed(0),
                                   TextStyle(
@@ -152,21 +140,6 @@ class Chart extends StatelessWidget {
                             },
                             tooltipPadding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3))),
-                    // titlesData: FlTitlesData(
-                    //     bottomTitles: const AxisTitles(),
-                    //     topTitles: AxisTitles(
-                    //       sideTitles: SideTitles(
-                    //         showTitles: true,
-                    //         reservedSize: 30,
-                    //         getTitlesWidget: (double value, TitleMeta meta) {
-                    //           return SideTitleWidget(
-                    //             axisSide: meta.axisSide,
-                    //             space: 4,
-                    //             child: const Text('l'),
-                    //           );
-                    //         },
-                    //       ),
-                    //     )),
                     lineBarsData: chartData),
               ),
             ),
@@ -174,7 +147,7 @@ class Chart extends StatelessWidget {
     );
   }
 
-  LineChartBarData getSpots(List<double> temp) {
+  LineChartBarData getSpots(List<double> temp, Color color) {
     List<FlSpot> spots = temp
         .asMap()
         .entries
@@ -184,11 +157,11 @@ class Chart extends StatelessWidget {
         spots: spots,
         preventCurveOverShooting: true,
         belowBarData: BarAreaData(show: false),
+        color: color,
         dotData: FlDotData(
           show: true,
           getDotPainter: (spot, percent, barData, index) {
             const radius = 3.0;
-            const color = Colors.blue;
             return FlDotCirclePainter(
               radius: radius,
               color: color,
@@ -198,24 +171,5 @@ class Chart extends StatelessWidget {
           },
         ),
         isCurved: true);
-  }
-
-  Map<String, double> getMaxMin(List<List<double>> temp) {
-    var max = temp[0][0];
-    var min = temp[0][0];
-
-    for (var t in temp) {
-      if (t.isNotEmpty) {
-        t.sort();
-        if (t.first < min) {
-          min = t.first;
-        }
-        if (t.last < max) {
-          max = t.last;
-        }
-      }
-    }
-
-    return {'min': min, 'max': max};
   }
 }

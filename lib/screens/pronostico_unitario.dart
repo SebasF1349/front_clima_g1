@@ -49,11 +49,6 @@ class PronosticoDia extends StatelessWidget {
                   'dataType': args['dataType'],
                   'time': next,
                 });
-            // Navigator.popAndPushNamed(context, 'pronostico_unitario',
-            //     arguments: <String, dynamic>{
-            //       'dataType': args['dataType'],
-            //       'time': next,
-            //     });
             FocusManager.instance.primaryFocus?.unfocus();
           },
           child: const Icon(Icons.arrow_forward),
@@ -67,8 +62,14 @@ class PronosticoDia extends StatelessWidget {
         ),
         body: Column(
           children: [
-            ClimaCard(data: data),
-            Row(children: buttons),
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: ClimaCard(data: data),
+            ),
+            Container(
+              margin: const EdgeInsets.all(5),
+              child: Row(children: buttons),
+            ),
           ],
         ));
   }
