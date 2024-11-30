@@ -3,10 +3,9 @@ import 'package:flutter_application_base/helpers/preferences.dart';
 import 'package:flutter_application_base/mocks/ciudad_mock.dart' show listaCiudades;
 
 class CiudadSearchDelegate extends SearchDelegate {
-
+  
   @override
   List<Widget>? buildActions(BuildContext context) {
-    // Icono para limpiar la búsqueda
     return [
       IconButton(
         icon: const Icon(Icons.clear),
@@ -66,6 +65,9 @@ class CiudadSearchDelegate extends SearchDelegate {
                 Preferences.city = city['name']!;
                 Preferences.latitude = city['latitude']!;
                 Preferences.longitude = city['longitude']!;
+                Preferences.timezone = city['timezone']!;
+                Preferences.country = city['country']!;
+                Preferences.provincia = city['admin1']!;
                 Navigator.pushNamed(context, 'ciudad_seleccionada',
                   arguments: <String, dynamic>{
                     'country_code': city['country_code'],
