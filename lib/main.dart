@@ -22,7 +22,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +29,9 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'home',
+        initialRoute: Preferences.city == '' ? 'buscar_ciudad' : 'pronostico',
         theme: tema.temaActual,
         routes: {
-          'home': (context) => Preferences.city == '' ? const BuscarCiudad() : const Pronostico(),
           'pronostico': (context) => const Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
           'weather_history_list': (context) => WeatherScreenList(),

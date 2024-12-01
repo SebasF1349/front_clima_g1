@@ -43,7 +43,6 @@ class CiudadSearchDelegate extends SearchDelegate {
       itemCount: suggestions.length,
       itemBuilder: (context, index) {
         final city = suggestions[index];
-        print(city['country_code']);
         return ListTile(
           leading: Image.asset(
             'assets/banderas/${city['country_code']}.png',

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/preferences.dart';
 
 class ClimateCard extends StatelessWidget {
   final String weatherStateName;
@@ -44,10 +45,23 @@ class ClimateCard extends StatelessWidget {
             Positioned(
               top: 10,
               left: 20,
-              child: Icon(
-                weatherIcon,
-                size: 80,
-                color: textColor.withOpacity(0.8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${Preferences.city}, ${Preferences.country}',
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  Icon(
+                    weatherIcon,
+                    size: 80,
+                    color: textColor.withOpacity(0.8),
+                  ),
+                ],
               ),
             ),
             Positioned(
@@ -57,13 +71,13 @@ class ClimateCard extends StatelessWidget {
                 weatherStateName,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 24,
+                  fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
             Positioned(
-              top: 20,
+              top: 30,
               right: 20,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,

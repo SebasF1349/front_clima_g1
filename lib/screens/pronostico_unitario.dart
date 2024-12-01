@@ -25,6 +25,7 @@ class PronosticoDia extends StatelessWidget {
     if (prev != '') {
       buttons.add(Expanded(
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(fixedSize: const Size(100, 50)),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(context, 'pronostico_unitario',
                 ModalRoute.withName('pronostico'),
@@ -41,6 +42,7 @@ class PronosticoDia extends StatelessWidget {
     if (next != '') {
       buttons.add(Expanded(
         child: ElevatedButton(
+          style: ElevatedButton.styleFrom(fixedSize: const Size(100, 50)),
           onPressed: () {
             Navigator.pushNamedAndRemoveUntil(context, 'pronostico_unitario',
                 ModalRoute.withName('pronostico'),
@@ -60,6 +62,7 @@ class PronosticoDia extends StatelessWidget {
           title: Text(args['time']),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               margin: const EdgeInsets.all(5),

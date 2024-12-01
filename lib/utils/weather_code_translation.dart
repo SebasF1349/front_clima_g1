@@ -27,8 +27,7 @@ Map<int, WeatherCode> weatherCodes = {
   82: WeatherCode(label: 'Aguacero violento', icon: Icons.cloud),
   85: WeatherCode(label: 'Nevada ligera', icon: Icons.cloud),
   86: WeatherCode(label: 'Nevada fuerte', icon: Icons.cloud),
-  95: WeatherCode(
-      label: 'Tormenta eléctrica ligera o moderada', icon: Icons.cloud),
+  95: WeatherCode(label: 'Tormenta eléctrica ligera o moderada', icon: Icons.cloud),
   96: WeatherCode(label: 'Tormenta con ligero granizo', icon: Icons.cloud),
   99: WeatherCode(label: 'Tormenta con fuerte granizo', icon: Icons.cloud),
 };

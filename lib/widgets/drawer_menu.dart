@@ -5,31 +5,25 @@ class DrawerMenu extends StatelessWidget {
     {
       'route': 'pronostico',
       'title': 'Pronóstico',
-      'subtitle': '',
+      'subtitle': 'Sebastián',
       'icon': Icons.cloud,
-    },
-    {
-      'route': 'buscar_ciudad',
-      'title': 'Buscar ciudad',
-      'subtitle': 'valentina',
-      'icon': Icons.search,
-    },
-    {
-      'route': 'home',
-      'title': 'Home',
-      'subtitle': 'Home + counter app',
-      'icon': Icons.home,
     },
     {
       'route': 'weather_history_list',
       'title': 'Historial Clima',
-      'subtitle': '',
+      'subtitle': 'Mateo',
       'icon': Icons.history,
+    },
+    {
+      'route': 'buscar_ciudad',
+      'title': 'Buscar Ciudad',
+      'subtitle': 'Valentina',
+      'icon': Icons.search,
     },
     {
       'route': 'settings',
       'title': 'Configuración',
-      'subtitle': '',
+      'subtitle': 'Sebastián',
       'icon': Icons.settings,
     },
   ];
@@ -41,7 +35,8 @@ class DrawerMenu extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Drawer(
-      backgroundColor: theme.drawerTheme.backgroundColor ?? theme.colorScheme.surface,
+      backgroundColor:
+          theme.drawerTheme.backgroundColor ?? theme.colorScheme.surface,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -50,14 +45,16 @@ class DrawerMenu extends StatelessWidget {
             context: context,
             tiles: _menuItems.map(
               (item) => ListTile(
-                contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                 dense: true,
                 minLeadingWidth: 25,
                 title: Text(
                   item['title']!,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.bold,
-                    color: theme.listTileTheme.textColor ?? theme.colorScheme.onSurface,
+                    color: theme.listTileTheme.textColor ??
+                        theme.colorScheme.onSurface,
                   ),
                 ),
                 subtitle: Text(
@@ -69,7 +66,8 @@ class DrawerMenu extends StatelessWidget {
                 ),
                 leading: Icon(
                   item['icon'] as IconData,
-                  color: theme.listTileTheme.iconColor ?? theme.colorScheme.primary,
+                  color: theme.listTileTheme.iconColor ??
+                      theme.colorScheme.primary,
                 ),
                 onTap: () {
                   Navigator.pop(context);
