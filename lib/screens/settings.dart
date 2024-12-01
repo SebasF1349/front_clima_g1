@@ -78,9 +78,9 @@ class _OptionsState extends State<Options> {
 
     return Column(
       children: [
-        createDropdownMenu(
-            'Tema',
-            DropdownMenu<String>(
+        SettingsDropdownMenu(
+            label: 'Tema',
+            dropdownMenu: DropdownMenu<String>(
               width: size.width * 9 / 20,
               initialSelection: Preferences.theme,
               onSelected: (String? value) {
@@ -95,9 +95,9 @@ class _OptionsState extends State<Options> {
               }).toList(),
             )),
         if (Preferences.theme == 'sistema')
-          createDropdownMenu(
-            'Tema Oscuro',
-            DropdownMenu<String>(
+          SettingsDropdownMenu(
+            label: 'Tema Oscuro',
+            dropdownMenu: DropdownMenu<String>(
               width: size.width * 9 / 20,
               initialSelection: Preferences.darkTheme,
               onSelected: (String? value) {
@@ -113,9 +113,9 @@ class _OptionsState extends State<Options> {
             ),
           ),
         if (Preferences.theme == 'sistema')
-          createDropdownMenu(
-            'Tema Claro',
-            DropdownMenu<String>(
+          SettingsDropdownMenu(
+            label: 'Tema Claro',
+            dropdownMenu: DropdownMenu<String>(
               width: size.width * 9 / 20,
               initialSelection: Preferences.lightTheme,
               onSelected: (String? value) {
@@ -149,9 +149,9 @@ class _OptionsState extends State<Options> {
             ),
           ),
         ),
-        createDropdownMenu(
-          'Zona Horaria',
-          DropdownMenu<String>(
+        SettingsDropdownMenu(
+          label: 'Zona Horaria',
+          dropdownMenu: DropdownMenu<String>(
             width: size.width * 9 / 20,
             initialSelection: Preferences.userSelectedTimezone != ''
                 ? Preferences.userSelectedTimezone
@@ -170,8 +170,17 @@ class _OptionsState extends State<Options> {
       ],
     );
   }
+}
 
-  Widget createDropdownMenu(String label, DropdownMenu<String> dropdownMenu) {
+class SettingsDropdownMenu extends StatelessWidget {
+  final String label;
+  final DropdownMenu dropdownMenu;
+
+  const SettingsDropdownMenu(
+      {super.key, required this.label, required this.dropdownMenu});
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       height: 80,
       child: Card(

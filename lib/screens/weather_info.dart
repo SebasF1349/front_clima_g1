@@ -27,7 +27,7 @@ class WeatherDetailsScreen extends StatelessWidget {
       {
         'title': 'Viento',
         'icon': Icons.air,
-        'value': "${data.windSpeed ?? 'N/A'} km/h", 
+        'value': "${data.windSpeed ?? 'N/A'} km/h",
       },
       {
         'title': 'Lluvia',
@@ -50,34 +50,32 @@ class WeatherDetailsScreen extends StatelessWidget {
         title: Text("Detalles del Clima - ${data.date}"),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              WeatherDetailsWidget(
-                weatherStateName: data.weatherLabel,
-                weatherIcon: data.weatherIcon,
-                temperature: data.avgTemp, 
-                weatherDetails: weatherDetails,
-              ),
-              const SizedBox(height: 20),
-              Row(
-                children: [
-                  SizedBox(
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            WeatherDetailsWidget(
+              weatherStateName: data.weatherLabel,
+              weatherIcon: data.weatherIcon,
+              temperature: data.avgTemp,
+              weatherDetails: weatherDetails,
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                SizedBox(
                     width: size.width - 32,
                     height: 150,
                     child: Chart(
                       type: 'horario',
                       min: limitedHourlyTemps,
                       labels: hourLabels,
-                    )
-                  )
-                ],
-              ),
-            ],
-          ),
+                    ))
+              ],
+            ),
+          ],
         ),
       ),
     );
   }
 }
+

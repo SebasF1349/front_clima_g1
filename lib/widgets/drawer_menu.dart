@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/helpers/preferences.dart';
 
 class DrawerMenu extends StatelessWidget {
   final List<Map<String, dynamic>> _menuItems = <Map<String, dynamic>>[
@@ -70,8 +71,14 @@ class DrawerMenu extends StatelessWidget {
                       theme.colorScheme.primary,
                 ),
                 onTap: () {
-                  Navigator.pop(context);
-                  Navigator.pushNamed(context, item['route']!);
+                  if ((item['route'] == 'pronostico' ||
+                          item['route'] == 'weather_history_list') &&
+                      Preferences.city == '') {
+                    redirectChooseCity(context);
+                  } else {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, item['route']!);
+                  }
                 },
               ),
             ),
@@ -84,6 +91,33 @@ class DrawerMenu extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> redirectChooseCity(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text(
+            'Debe elegir una ciudad primero',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Elegir',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, 'buscar_ciudad');
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
