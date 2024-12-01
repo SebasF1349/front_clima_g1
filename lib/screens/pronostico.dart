@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_base/utils/weather_code_translation.dart';
 import 'package:flutter_application_base/widgets/drawer_menu.dart';
 import 'package:flutter_application_base/widgets/chart.dart';
 import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart'
     show pronosticoHorario;
 import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
+import 'package:flutter_application_base/widgets/weather_detail.dart';
 
 class Pronostico extends StatelessWidget {
   const Pronostico({super.key});
@@ -25,14 +27,49 @@ class Pronostico extends StatelessWidget {
     List<String> hourLabelsDiario =
         getDayLabels(pronosticoDiario.data.daily.time);
 
+    final weather = weatherCodes[pronosticoDiario.data.daily.weatherCode[0]];
+
+    final weatherDetails = [
+      {
+        'title': 'Máx Temp',
+        'icon': Icons.thermostat,
+        'value': "${tempDiarioMax[0]}°C",
+      },
+      {
+        'title': 'Mín Temp',
+        'icon': Icons.thermostat_outlined,
+        'value': "${tempDiarioMin[0]}°C",
+      },
+      {
+        'title': 'Lluvia',
+        'icon': Icons.water_drop,
+        'value':
+            "${pronosticoDiario.data.daily.precipitationProbabilityMax[0]} %",
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pronóstico'),
       ),
       drawer: DrawerMenu(),
       body: ListView(children: [
-        // Center(child: Text('Pronóstico')),
-        const SizedBox(height: 80),
+        const SizedBox(height: 10),
+        WeatherDetailsWidget(
+          weatherStateName: weather?.label ?? 'Clima desconocido',
+          weatherIcon: weather?.icon ?? Icons.help_outline,
+          temperature: tempHorario[6],
+          weatherDetails: weatherDetails,
+        ),
+        const SizedBox(height: 20),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Text(
+            'Hoy',
+            textScaler: TextScaler.linear(1.3),
+          ),
+        ),
+        const SizedBox(height: 10),
         Row(children: [
           // const SizedBox(width: 20),
           SizedBox(
@@ -44,7 +81,15 @@ class Pronostico extends StatelessWidget {
                 labels: hourLabelsHorario,
               ))
         ]),
-        const SizedBox(height: 80),
+        const SizedBox(height: 30),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child: Text(
+            'Próximos días',
+            textScaler: TextScaler.linear(1.3),
+          ),
+        ),
+        const SizedBox(height: 10),
         Row(children: [
           // const SizedBox(width: 20),
           SizedBox(

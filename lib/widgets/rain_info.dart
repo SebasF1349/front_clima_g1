@@ -14,18 +14,22 @@ class WeatherInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final cardColor = theme.colorScheme.background;
+    final textColor = theme.textTheme.bodyLarge?.color ?? Colors.white;
+
     return Column(
       children: [
         Container(
           padding: const EdgeInsets.all(12.0),
           decoration: BoxDecoration(
-            color: Colors.blue.shade50,
+            color: cardColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Icon(
             icon,
             size: 40,
-            color: Colors.blue.shade700,
+            color: textColor.withOpacity(0.8),
           ),
         ),
         const SizedBox(height: 8),
@@ -48,3 +52,4 @@ class WeatherInfoWidget extends StatelessWidget {
     );
   }
 }
+
