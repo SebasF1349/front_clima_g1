@@ -65,13 +65,14 @@ const List<String> themes = <String>[
 
 class _OptionsState extends State<Options> {
   String theme = themes.last;
-  List<String> timezones = [for (var i = -12; i <= 14; i += 1) i.toString()];
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     final temaProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+    List<String> timezones = [for (var i = -12; i <= 14; i += 1) i.toString()];
     timezones.insert(0, 'Ciudad Elegida');
     timezones.insert(1, 'Sistema');
 
@@ -152,13 +153,14 @@ class _OptionsState extends State<Options> {
           'Zona Horaria',
           DropdownMenu<String>(
             width: size.width * 9 / 20,
-            initialSelection: timezones.first,
-            // onSelected: (String? value) {
-            // setState(() {
-            //   Preferences.theme = value!;
-            //   temaProvider.setTheme(Preferences.getTheme());
-            // });
-            // },
+            initialSelection: Preferences.userSelectedTimezone != ''
+                ? Preferences.userSelectedTimezone
+                : 'Ciudad Elegida',
+            onSelected: (String? value) {
+              setState(() {
+                Preferences.userSelectedTimezone = value!;
+              });
+            },
             dropdownMenuEntries:
                 timezones.map<DropdownMenuEntry<String>>((String value) {
               return DropdownMenuEntry<String>(value: value, label: value);

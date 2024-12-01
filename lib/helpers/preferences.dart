@@ -12,6 +12,7 @@ class Preferences {
   static String _provincia = '';
   static String _country = '';
   static String _timezone = '';
+  static String _userSelectedTimezone = '';
   static late SharedPreferences _prefs;
 
   static Future<void> initShared() async {
@@ -99,6 +100,15 @@ class Preferences {
     _prefs.setString('timezone', value);
   }
 
+  static String get userSelectedTimezone {
+    return _prefs.getString('userSelectedTimezone') ?? _userSelectedTimezone;
+  }
+
+  static set userSelectedTimezone(String value) {
+    _userSelectedTimezone = value;
+    _prefs.setString('userSelectedTimezone', value);
+  }
+
   static Flavor getTheme() {
     return switch (getThemeSaved()) {
       'latte' => catppuccin.latte,
@@ -117,5 +127,16 @@ class Preferences {
       currentTheme = brightness == Brightness.light ? lightTheme : darkTheme;
     }
     return currentTheme;
+  }
+
+  static String getTimeZone() {
+    if (userSelectedTimezone == 'Ciudad Elegida') {
+      return timezone;
+    } else if (userSelectedTimezone == 'Sistema') {
+      DateTime dateTime = DateTime.now();
+      String tz = dateTime.timeZoneOffset.toString().split(':')[0];
+      return 'Etc%2FGMT$tz';
+    }
+    return 'Etc%2FGMT$userSelectedTimezone';
   }
 }
