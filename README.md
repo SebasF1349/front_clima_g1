@@ -81,7 +81,7 @@ En primer lugar, tenemos la opción para cambiar el tema, es decir, como se visu
 - La zona horaria del sistema.
 - El Huso horario (en números).
 
-<img src="img_docs/Screen%20configuración.jpeg" width=30% height=30% alt="Pantalla configuración del usuario.">
+<img src="img_docs/Screen%20configuracion.png" width=30% height=30% alt="Pantalla configuración del usuario.">
 
 ## 👥 Autores
 
