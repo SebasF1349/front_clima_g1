@@ -75,8 +75,11 @@ En primer lugar, tenemos la opción para cambiar el tema, es decir, como se visu
 - macchiato: Este tema permite visualizar la aplicación en un tema oscuro, siendo un poco más oscuro al tema frappe.
 - mocha: Este tema permite visualizar la aplicación en un tema oscuro, siendo un poco más oscuro al tema macchiato.
 - sistema: Este tema permite elegir de manera personalizada el Tema Claro y el Tema Oscuro, que cambiará de acuerdo al tema del sistema. La lista de opciones contiene las opciones descritas anteriormente.
-  En segundo lugar, tenemos la opción de cambiar la ciudad que queremos saber el clima. Al presionar redirige a la pantalla de busqueda.
-  En último lugar, tenemos la opción de elegir de manera personalizada la zona horaria que queremos utilizar, siendo las opciones:
+  
+En segundo lugar, tenemos la opción de cambiar la ciudad que queremos saber el clima. Al presionar redirige a la pantalla de busqueda.
+  
+En último lugar, tenemos la opción de elegir de manera personalizada la zona horaria que queremos utilizar, siendo las opciones:
+
 - La zona horaria de la ciudad elegida.
 - La zona horaria del sistema.
 - El Huso horario (en números).
