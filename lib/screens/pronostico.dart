@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/utils/weather_code_translation.dart';
-import 'package:flutter_application_base/widgets/drawer_menu.dart';
-import 'package:flutter_application_base/widgets/chart.dart';
-import 'package:flutter_application_base/mocks/pronostico_horario_mock.dart'
+import 'package:clima_app/utils/weather_code_translation.dart';
+import 'package:clima_app/widgets/drawer_menu.dart';
+import 'package:clima_app/widgets/chart.dart';
+import 'package:clima_app/mocks/pronostico_horario_mock.dart'
     show pronosticoHorario;
-import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
+import 'package:clima_app/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
-import 'package:flutter_application_base/widgets/weather_detail.dart';
+import 'package:clima_app/widgets/weather_detail.dart';
 
 class Pronostico extends StatelessWidget {
   const Pronostico({super.key});

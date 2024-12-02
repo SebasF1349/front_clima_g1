@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:clima_app/helpers/preferences.dart';
 
 class ClimateCard extends StatelessWidget {
   final String weatherStateName;

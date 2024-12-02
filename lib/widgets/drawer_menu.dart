@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:clima_app/helpers/preferences.dart';
 
 class DrawerMenu extends StatelessWidget {
   final List<Map<String, dynamic>> _menuItems = <Map<String, dynamic>>[

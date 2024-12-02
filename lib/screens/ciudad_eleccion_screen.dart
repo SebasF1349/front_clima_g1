@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
-import 'package:flutter_application_base/widgets/mensaje_ciudad.dart';
+import 'package:clima_app/helpers/preferences.dart';
+import 'package:clima_app/widgets/mensaje_ciudad.dart';
 
 class CiudadSeleccionada extends StatelessWidget {
   const CiudadSeleccionada({super.key});

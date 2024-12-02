@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/themes/catppuccin_colors.dart';
+import 'package:clima_app/themes/catppuccin_colors.dart';
 
 class Chart extends StatelessWidget {
   final String type;

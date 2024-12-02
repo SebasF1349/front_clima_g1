@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/models/climate_data.dart';
+import 'package:clima_app/models/climate_data.dart';
 
 class ClimateItem extends StatelessWidget {
   final ClimateData climateData;

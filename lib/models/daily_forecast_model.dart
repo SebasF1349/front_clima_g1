@@ -1,4 +1,4 @@
-import 'package:flutter_application_base/models/daily_data_model.dart';
+import 'package:clima_app/models/daily_data_model.dart';
 
 class DailyForecast {
   String msg;

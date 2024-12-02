@@ -1,4 +1,4 @@
-import 'package:flutter_application_base/models/hour_data_model.dart';
+import 'package:clima_app/models/hour_data_model.dart';
 
 class HourForecast {
   String msg;

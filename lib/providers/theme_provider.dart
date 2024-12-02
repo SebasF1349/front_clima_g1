@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/themes/catppuccin_theme.dart';
+import 'package:clima_app/themes/catppuccin_theme.dart';
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
 
 class ThemeProvider extends ChangeNotifier {
