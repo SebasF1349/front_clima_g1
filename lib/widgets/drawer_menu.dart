@@ -1,118 +1,168 @@
 import 'package:flutter/material.dart';
+import 'package:clima_app/helpers/preferences.dart';
 
 class DrawerMenu extends StatelessWidget {
-  final List<Map<String, String>> _menuItems = <Map<String, String>>[
-    {'route': 'home', 'title': 'Home', 'subtitle': 'Home + counter app'},
-    {'route': 'custom_list', 'title': 'Custom list', 'subtitle': ''},
-    {'route': 'profile', 'title': 'Perfil usuario', 'subtitle': ''},
+  final List<Map<String, dynamic>> _menuItems = <Map<String, dynamic>>[
+    {
+      'route': 'pronostico',
+      'title': 'Pronóstico',
+      'subtitle': 'Sebastián',
+      'icon': Icons.cloud,
+    },
+    {
+      'route': 'weather_history_list',
+      'title': 'Historial Clima',
+      'subtitle': 'Mateo',
+      'icon': Icons.history,
+    },
+    {
+      'route': 'buscar_ciudad',
+      'title': 'Buscar Ciudad',
+      'subtitle': 'Valentina',
+      'icon': Icons.search,
+    },
+    {
+      'route': 'settings',
+      'title': 'Configuración',
+      'subtitle': 'Sebastián',
+      'icon': Icons.settings,
+    },
   ];
 
   DrawerMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Drawer(
+      backgroundColor:
+          theme.drawerTheme.backgroundColor ?? theme.colorScheme.surface,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const _DrawerHeaderAlternative(),
+          const DrawerHeaderAlternative(),
           ...ListTile.divideTiles(
-              context: context,
-              tiles: _menuItems
-                  .map((item) => ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 0, horizontal: 10),
-                        dense: true,
-                        minLeadingWidth: 25,
-                        iconColor: Colors.blueGrey,
-                        title: Text(item['title']!,
-                            style: const TextStyle(fontFamily: 'FuzzyBubbles')),
-                        subtitle: Text(item['subtitle'] ?? '',
-                            style: const TextStyle(
-                                fontFamily: 'RobotoMono', fontSize: 11)),
-                        leading: const Icon(Icons.arrow_right),
-                        /* trailing: const Icon(Icons.arrow_right), */
-                        onTap: () {
-                          Navigator.pop(context);
-                          //Navigator.pushReplacementNamed(context, item['route']!);
-                          Navigator.pushNamed(context, item['route']!);
-                        },
-                      ))
-                  .toList())
+            context: context,
+            tiles: _menuItems.map(
+              (item) => ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                dense: true,
+                minLeadingWidth: 25,
+                title: Text(
+                  item['title']!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.listTileTheme.textColor ??
+                        theme.colorScheme.onSurface,
+                  ),
+                ),
+                subtitle: Text(
+                  item['subtitle'] ?? '',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.textTheme.bodySmall?.color?.withOpacity(0.7) ??
+                        theme.colorScheme.onSurface.withOpacity(0.7),
+                  ),
+                ),
+                leading: Icon(
+                  item['icon'] as IconData,
+                  color: theme.listTileTheme.iconColor ??
+                      theme.colorScheme.primary,
+                ),
+                onTap: () {
+                  if ((item['route'] == 'pronostico' ||
+                          item['route'] == 'weather_history_list') &&
+                      Preferences.city == '') {
+                    redirectChooseCity(context);
+                  } else {
+                    Navigator.pop(context);
+                    Navigator.pushNamed(context, item['route']!);
+                  }
+                },
+              ),
+            ),
+          ),
+          Divider(
+            color: theme.dividerColor,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
+          ),
         ],
       ),
     );
   }
+
+  Future<void> redirectChooseCity(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: const Text(
+            'Debe elegir una ciudad primero',
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'Elegir',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushNamed(context, 'buscar_ciudad');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-class _DrawerHeaderAlternative extends StatelessWidget {
-  const _DrawerHeaderAlternative({
-    super.key,
-  });
+class DrawerHeaderAlternative extends StatelessWidget {
+  const DrawerHeaderAlternative({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return DrawerHeader(
-      padding: EdgeInsets.zero,
-      child: Stack(children: [
-        Positioned(
-          top: -90,
-          child: Container(
-            width: 130,
-            height: 130,
-            decoration: BoxDecoration(
-                color: Colors.blueAccent.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(10)),
-            transform: Matrix4.rotationZ(0.2),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface, // Fondo de seguridad
+      ),
+      child: Stack(
+        children: [
+          // Contenido del header
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage('assets/images/avatar.png'),
+              ),
+              const SizedBox(height: 10),
+              Text(
+                'Bienvenido!',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  color: theme.colorScheme.onSurface,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'Explora las opciones del menú',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurface.withOpacity(0.7),
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
-        ),
-        Positioned(
-          bottom: 0,
-          left: 140,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-                color: Colors.redAccent.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(10)),
-            transform: Matrix4.rotationZ(0.9),
-          ),
-        ),
-        Positioned(
-          top: 30,
-          right: 35,
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-                color: Colors.amber.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(10)),
-            transform: Matrix4.rotationZ(0.9),
-          ),
-        ),
-        Positioned(
-          top: 70,
-          right: -10,
-          child: Container(
-            width: 30,
-            height: 30,
-            decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(5)),
-            transform: Matrix4.rotationZ(0.9),
-          ),
-        ),
-        Container(
-          alignment: Alignment.bottomRight,
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: const Text(
-            '[  Menu  ]',
-            style: TextStyle(
-                fontSize: 13, color: Colors.black54, fontFamily: 'RobotoMono'),
-            textAlign: TextAlign.right,
-          ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

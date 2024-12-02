@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/widgets/drawer_menu.dart';
+import 'package:clima_app/widgets/drawer_menu.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -11,9 +11,6 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
-        centerTitle: true,
-        leadingWidth: 40,
-        toolbarHeight: 80,
       ),
       drawer: DrawerMenu(),
       body: const Center(child: Text('Hola mundo')),

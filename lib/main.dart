@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
-import 'package:flutter_application_base/screens/screens.dart';
+import 'package:clima_app/helpers/background_detector.dart';
+import 'package:clima_app/helpers/preferences.dart';
+import 'package:clima_app/screens/ciudad_eleccion_screen.dart';
+import 'package:clima_app/screens/screens.dart';
+import 'package:clima_app/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initShared();
 
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<ThemeProvider>(
+        create: (_) => ThemeProvider(flavor: Preferences.getTheme()),
+      ),
+    ],
+    child: const BackgroundDetector(child: MyApp()),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -14,17 +25,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tema = Provider.of<ThemeProvider>(context, listen: true);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        initialRoute: 'home',
-        theme: Preferences.darkmode ? ThemeData.dark() : ThemeData.light(),
+        initialRoute: Preferences.city == '' ? 'buscar_ciudad' : 'pronostico',
+        theme: tema.temaActual,
         routes: {
-          'home': (context) => const HomeScreen(),
-          'custom_list': (context) => const CustomListScreen(),
-          'profile': (context) => const ProfileScreen(),
-          'custom_list_item': (context) => const CustomListItem(),
-        }
-        /* home: DesignScreen(), */
-        );
+          'pronostico': (context) => const Pronostico(),
+          'pronostico_unitario': (context) => const PronosticoDia(),
+          'weather_history_list': (context) => WeatherScreenList(),
+          'settings': (context) => const Settings(),
+          'ciudad_seleccionada': (context) => const CiudadSeleccionada(),
+          'buscar_ciudad': (context) => const BuscarCiudad(),
+        });
   }
 }
