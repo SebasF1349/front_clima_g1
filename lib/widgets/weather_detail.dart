@@ -26,18 +26,15 @@ class WeatherDetailsWidget extends StatelessWidget {
           temperature: temperature,
         ),
         const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: weatherDetails.map((detail) {
-              return WeatherInfoWidget(
-                title: detail['title'],
-                icon: detail['icon'],
-                value: detail['value'],
-              );
-            }).toList(),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: weatherDetails.map((detail) {
+            return WeatherInfoWidget(
+              title: detail['title'],
+              icon: detail['icon'],
+              value: detail['value'],
+            );
+          }).toList(),
         ),
       ],
     );
