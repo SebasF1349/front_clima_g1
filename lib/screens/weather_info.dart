@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/models/climate_data.dart';
-import 'package:flutter_application_base/widgets/weather_detail.dart';
-import 'package:flutter_application_base/widgets/chart.dart';
+import 'package:clima_app/models/climate_data.dart';
+import 'package:clima_app/widgets/weather_detail.dart';
+import 'package:clima_app/widgets/chart.dart';
 
 class WeatherDetailsScreen extends StatelessWidget {
   final ClimateData data;

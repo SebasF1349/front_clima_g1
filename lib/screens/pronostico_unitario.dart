@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/mocks/pronostico_diario_mock.dart'
+import 'package:clima_app/mocks/pronostico_diario_mock.dart'
     show pronosticoDiario;
-import 'package:flutter_application_base/mocks/pronostico_hora_mock.dart'
+import 'package:clima_app/mocks/pronostico_hora_mock.dart'
     show pronosticoHora;
-import 'package:flutter_application_base/models/clima_card_data.dart';
-import 'package:flutter_application_base/utils/weather_code_translation.dart'
+import 'package:clima_app/models/clima_card_data.dart';
+import 'package:clima_app/utils/weather_code_translation.dart'
     show weatherCodes;
-import 'package:flutter_application_base/widgets/clima_card.dart';
+import 'package:clima_app/widgets/clima_card.dart';
 
 class PronosticoDia extends StatelessWidget {
   const PronosticoDia({super.key});

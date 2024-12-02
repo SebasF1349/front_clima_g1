@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/models/climate_data.dart';
-import 'package:flutter_application_base/models/hourly_forecast_model.dart';
-import 'package:flutter_application_base/models/weather_code.dart';
-import 'package:flutter_application_base/utils/weather_code_translation.dart';
+import 'package:clima_app/models/climate_data.dart';
+import 'package:clima_app/models/hourly_forecast_model.dart';
+import 'package:clima_app/models/weather_code.dart';
+import 'package:clima_app/utils/weather_code_translation.dart';
 
 class WeatherUtils {
   /// Función para determinar el máximo y el mínimo de temperatura de un día

@@ -1,4 +1,4 @@
-import 'package:flutter_application_base/models/hourly_data_model.dart';
+import 'package:clima_app/models/hourly_data_model.dart';
 import 'dart:convert';
 
 HourlyForecast hourlyForecastFromJson(String str) =>

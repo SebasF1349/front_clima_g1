@@ -1,7 +1,7 @@
-import 'package:flutter_application_base/models/hourly_model.dart';
-import 'package:flutter_application_base/models/hourly_data_model.dart';
-import 'package:flutter_application_base/models/hourly_forecast_model.dart';
-import 'package:flutter_application_base/models/hourly_units_model.dart';
+import 'package:clima_app/models/hourly_model.dart';
+import 'package:clima_app/models/hourly_data_model.dart';
+import 'package:clima_app/models/hourly_forecast_model.dart';
+import 'package:clima_app/models/hourly_units_model.dart';
 
 HourlyForecast pronosticoHistorial = HourlyForecast(
   msg: "Ok",

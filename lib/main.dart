@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/helpers/background_detector.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
-import 'package:flutter_application_base/screens/ciudad_eleccion_screen.dart';
-import 'package:flutter_application_base/screens/screens.dart';
-import 'package:flutter_application_base/providers/theme_provider.dart';
+import 'package:clima_app/helpers/background_detector.dart';
+import 'package:clima_app/helpers/preferences.dart';
+import 'package:clima_app/screens/ciudad_eleccion_screen.dart';
+import 'package:clima_app/screens/screens.dart';
+import 'package:clima_app/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {

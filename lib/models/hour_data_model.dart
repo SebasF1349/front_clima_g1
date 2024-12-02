@@ -1,5 +1,5 @@
-import 'package:flutter_application_base/models/hour_model.dart';
-import 'package:flutter_application_base/models/hourly_units_model.dart';
+import 'package:clima_app/models/hour_model.dart';
+import 'package:clima_app/models/hourly_units_model.dart';
 
 class HourData {
   int latitude;

@@ -1,5 +1,5 @@
 import 'package:catppuccin_flutter/catppuccin_flutter.dart';
-import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:clima_app/helpers/preferences.dart';
 import 'package:flutter/material.dart';
 
 Map<String, Color> catppuccinColors() {

@@ -1,7 +1,7 @@
-import 'package:flutter_application_base/models/daily_data_model.dart';
-import 'package:flutter_application_base/models/daily_forecast_model.dart';
-import 'package:flutter_application_base/models/daily_model.dart';
-import 'package:flutter_application_base/models/daily_units_model.dart';
+import 'package:clima_app/models/daily_data_model.dart';
+import 'package:clima_app/models/daily_forecast_model.dart';
+import 'package:clima_app/models/daily_model.dart';
+import 'package:clima_app/models/daily_units_model.dart';
 
 DailyForecast pronosticoDiario = DailyForecast(
     msg: "Ok",

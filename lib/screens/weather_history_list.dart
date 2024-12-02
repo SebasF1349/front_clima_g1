@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/models/climate_data.dart';
-import 'package:flutter_application_base/utils/weather_utils.dart';
-import 'package:flutter_application_base/mocks/historial_mock.dart';
-import 'package:flutter_application_base/widgets/drawer_menu.dart';
-import 'package:flutter_application_base/screens/weather_info.dart'; 
+import 'package:clima_app/models/climate_data.dart';
+import 'package:clima_app/utils/weather_utils.dart';
+import 'package:clima_app/mocks/historial_mock.dart';
+import 'package:clima_app/widgets/drawer_menu.dart';
+import 'package:clima_app/screens/weather_info.dart'; 
 
 class WeatherScreenList extends StatelessWidget {
   WeatherScreenList({Key? key}) : super(key: key);

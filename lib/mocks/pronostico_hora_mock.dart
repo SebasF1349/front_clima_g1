@@ -1,7 +1,7 @@
-import 'package:flutter_application_base/models/hour_data_model.dart';
-import 'package:flutter_application_base/models/hour_forecast_model.dart';
-import 'package:flutter_application_base/models/hour_model.dart';
-import 'package:flutter_application_base/models/hourly_units_model.dart';
+import 'package:clima_app/models/hour_data_model.dart';
+import 'package:clima_app/models/hour_forecast_model.dart';
+import 'package:clima_app/models/hour_model.dart';
+import 'package:clima_app/models/hourly_units_model.dart';
 
 HourForecast pronosticoHora = HourForecast(
     msg: "Ok",

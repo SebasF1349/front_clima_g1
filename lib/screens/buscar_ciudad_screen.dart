@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/searchrs/search_ciudad.dart';
-import 'package:flutter_application_base/widgets/drawer_menu.dart';
+import 'package:clima_app/searchrs/search_ciudad.dart';
+import 'package:clima_app/widgets/drawer_menu.dart';
 
 class BuscarCiudad extends StatelessWidget {
   const BuscarCiudad({super.key});
