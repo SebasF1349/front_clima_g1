@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/background_detector.dart';
 import 'package:clima_app/helpers/preferences.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initShared();
+  await dotenv.load(fileName: ".env");
 
   runApp(MultiProvider(
     providers: [
