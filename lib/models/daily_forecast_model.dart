@@ -1,4 +1,10 @@
 import 'package:clima_app/models/daily_data_model.dart';
+import 'dart:convert';
+
+DailyForecast dailyForecastFromJson(String str) =>
+    DailyForecast.fromJson(json.decode(str));
+
+String hourlyForecastToJson(DailyForecast data) => json.encode(data.toJson());
 
 class DailyForecast {
   String msg;

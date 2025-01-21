@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         initialRoute: Preferences.city == '' ? 'buscar_ciudad' : 'pronostico',
         theme: tema.temaActual,
         routes: {
-          'pronostico': (context) => const Pronostico(),
+          'pronostico': (context) => Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
           'weather_history_list': (context) => WeatherScreenList(),
           'settings': (context) => const Settings(),
