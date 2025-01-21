@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/background_detector.dart';
 import 'package:clima_app/helpers/preferences.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initShared();
+  await dotenv.load(fileName: ".env");
 
   runApp(MultiProvider(
     providers: [
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         initialRoute: Preferences.city == '' ? 'buscar_ciudad' : 'pronostico',
         theme: tema.temaActual,
         routes: {
-          'pronostico': (context) => const Pronostico(),
+          'pronostico': (context) => Pronostico(),
           'pronostico_unitario': (context) => const PronosticoDia(),
           'weather_history_list': (context) => WeatherScreenList(),
           'settings': (context) => const Settings(),

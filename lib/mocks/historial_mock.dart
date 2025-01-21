@@ -24,10 +24,12 @@ HourlyForecast pronosticoHistorial = HourlyForecast(
     hourly: Hourly(
       time: List.generate(
         57,
-        (index) => DateTime.parse("2024-11-23T00:00").add(Duration(hours: index)),
+        (index) =>
+            DateTime.parse("2024-11-23T00:00").add(Duration(hours: index)),
       ),
       temperature2M: List.generate(57, (index) => -3.0 + (index % 10) * 0.1),
-      apparentTemperature: List.generate(57, (index) => -8.0 + (index % 10) * 0.2),
+      apparentTemperature:
+          List.generate(57, (index) => -8.0 + (index % 10) * 0.2),
       precipitationProbability: List.generate(57, (index) => (index % 100)),
       rain: List.generate(57, (index) => (index % 2 == 0 ? 0.0 : 0.1)),
       weatherCode: List.generate(57, (index) => [2, 3, 85, 86, 71][index % 5]),
