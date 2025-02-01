@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initShared();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load();
 
   runApp(MultiProvider(
     providers: [

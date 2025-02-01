@@ -1,16 +1,29 @@
-import 'package:flutter/material.dart';
 import 'package:clima_app/models/climate_data.dart';
-import 'package:clima_app/widgets/weather_detail.dart';
 import 'package:clima_app/widgets/chart.dart';
+import 'package:clima_app/widgets/weather_detail.dart';
+import 'package:flutter/material.dart';
 
-class WeatherDetailsScreen extends StatelessWidget {
+class WeatherDetailsScreen extends StatefulWidget {
   final ClimateData data;
 
-  const WeatherDetailsScreen({Key? key, required this.data}) : super(key: key);
+  const WeatherDetailsScreen({super.key, required this.data});
+
+  @override
+  State<WeatherDetailsScreen> createState() => _WeatherDetailScreenState();
+}
+
+class _WeatherDetailScreenState extends State<WeatherDetailsScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final data = widget.data;
 
     // Datos adicionales para WeatherDetailsWidget
     final weatherDetails = [
@@ -78,4 +91,3 @@ class WeatherDetailsScreen extends StatelessWidget {
     );
   }
 }
-
