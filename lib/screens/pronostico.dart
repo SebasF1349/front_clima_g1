@@ -127,7 +127,7 @@ class _Pronostico extends State<Pronostico> {
                   ]),
                 ]);
               } else if (snapshot.hasError) {
-                return Text('1: ' + snapshot.error.toString());
+                return Text('${snapshot.error}');
               } else {
                 return const CircularProgressIndicator();
               }

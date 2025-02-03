@@ -1,3 +1,4 @@
+import 'package:clima_app/screens/pronostico_unitario_hora.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/background_detector.dart';
@@ -35,7 +36,9 @@ class MyApp extends StatelessWidget {
         theme: tema.temaActual,
         routes: {
           'pronostico': (context) => Pronostico(),
-          'pronostico_unitario': (context) => const PronosticoDia(),
+          'pronostico_unitario_dia': (context) => const PronosticoUnitarioDia(),
+          'pronostico_unitario_hora': (context) =>
+              const PronosticoUnitarioHora(),
           'weather_history_list': (context) => WeatherScreenList(),
           'settings': (context) => const Settings(),
           'ciudad_seleccionada': (context) => const CiudadSeleccionada(),
