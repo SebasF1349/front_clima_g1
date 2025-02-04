@@ -10,7 +10,7 @@ double latitud = 0.0;
 DateTime? lastDay;
 DateTime? lastCheck;
 
-String get ip => dotenv.env['IP_EMULATOR'] ?? '10.0.2.2:3000';
+String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
 
 Future<DailyForecast?> searchDailyForecast() async {
   double newLongitud = Preferences.longitude;

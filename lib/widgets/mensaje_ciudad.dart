@@ -1,17 +1,15 @@
+import 'dart:typed_data';
+import 'package:clima_app/helpers/bandera_foto_future.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/preferences.dart';
 
 class CiudadCardWidget extends StatelessWidget {
-  late String ciudadNombre = Preferences.city;
   final String countryCode;
-  late double latitud = Preferences.latitude;
-  late double longitud = Preferences.longitude;
   final VoidCallback onButton1Pressed;
   final VoidCallback onButton2Pressed;
 
-  CiudadCardWidget({
+  const CiudadCardWidget({
     super.key,
-    required this.ciudadNombre,
     required this.countryCode,
     required this.onButton1Pressed,
     required this.onButton2Pressed,
@@ -19,6 +17,9 @@ class CiudadCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ciudadNombre = Preferences.city;
+    final provinciaNombre = Preferences.provincia;
+ 
     return Card(
       margin: const EdgeInsets.all(16),
       shape: RoundedRectangleBorder(
@@ -30,37 +31,43 @@ class CiudadCardWidget extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(
-              'assets/banderas/$countryCode.png',
-              width: 100,
-              height: 60,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.flag, color: Colors.grey, size: 60);
+            FutureBuilder<Uint8List>(
+              future: buscarBandera(countryCode.toLowerCase()),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator(strokeWidth: 2.0);
+                } else if (snapshot.hasError) {
+                  return const Icon(Icons.flag, color: Colors.grey, size: 60);
+                } else {
+                  return Image.memory(
+                    snapshot.data!,
+                    width: 100,
+                    height: 60,
+                    fit: BoxFit.cover,
+                  );
+                }
               },
             ),
             const SizedBox(height: 16),
-
             Text(
-              ciudadNombre,
+              ciudadNombre +', '+ provinciaNombre,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(height: 16),
-
             // Botones
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
                   onPressed: onButton1Pressed,
-                  child: const Text('Clima HOY - FUTURO'),
+                  child: const Text('Pronóstico'),
                 ),
                 ElevatedButton(
                   onPressed: onButton2Pressed,
-                  child: const Text('Clima PASADO'),
+                  child: const Text('Historial pronóstico'),
                 ),
               ],
             ),
