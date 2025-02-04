@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
               const PronosticoUnitarioHora(),
           'weather_history_list': (context) => WeatherScreenList(),
           'settings': (context) => const Settings(),
-          'ciudad_seleccionada': (context) => const CiudadSeleccionada(),
+          'ciudad_seleccionada': (context) => CiudadSeleccionada(),
           'buscar_ciudad': (context) => const BuscarCiudad(),
         });
   }
