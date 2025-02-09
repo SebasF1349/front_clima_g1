@@ -1,4 +1,3 @@
-import 'package:clima_app/screens/pronostico_unitario_hora.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/background_detector.dart';

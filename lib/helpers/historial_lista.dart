@@ -11,7 +11,7 @@ double longitud = 0.0;
 double latitud = 0.0;
 DateTime? lastDay;
 
-String get ip => dotenv.env['IP_EMULATOR'] ?? '127.0.0.1:3000';
+String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
 
 Future<List<ClimateData>> searchClimateDataForecast() async {
   double newLongitud = Preferences.longitude;
