@@ -11,6 +11,7 @@ class Preferences {
   static String _city = '';
   static String _provincia = '';
   static String _country = '';
+  static String _countryCode = '';
   static String _timezone = '';
   static String _userSelectedTimezone = '';
   static late SharedPreferences _prefs;
@@ -89,6 +90,15 @@ class Preferences {
   static set country(String value) {
     _country = value;
     _prefs.setString('country', value);
+  }
+
+  static String get countryCode {
+    return _prefs.getString('country_code') ?? _countryCode;
+  }
+
+  static set countryCode(String value) {
+    _countryCode = value;
+    _prefs.setString('country_code', value);
   }
 
   static String get timezone {
