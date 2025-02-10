@@ -32,10 +32,8 @@ ThemeData catppuccinTheme(Flavor flavor) {
               elevation: 3)),
       cardTheme: CardTheme(color: flavor.surface1, elevation: 3),
       colorScheme: ColorScheme(
-        background: flavor.base,
         brightness: brightness,
         error: flavor.surface2,
-        onBackground: flavor.text,
         onError: flavor.red,
         onPrimary: primaryColor,
         onSecondary: secondaryColor,
