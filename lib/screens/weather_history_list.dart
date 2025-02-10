@@ -40,11 +40,12 @@ class _WeatherScreenListState extends State<WeatherScreenList> {
           }
 
           List<ClimateData> climateDataList = snapshot.data!;
+          final reversedList = climateDataList.reversed.toList();
 
           return ListView.builder(
-            itemCount: climateDataList.length,
+            itemCount: reversedList.length,
             itemBuilder: (context, index) {
-              final data = climateDataList[index];
+              final data = reversedList[index];
               return Card(
                 margin: const EdgeInsets.all(8.0),
                 child: ListTile(
@@ -59,7 +60,7 @@ class _WeatherScreenListState extends State<WeatherScreenList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => WeatherDetailsScreen(data: data),
+                        builder: (context) => WeatherDetailsScreen(date: data.date),
                       ),
                     );
                   },

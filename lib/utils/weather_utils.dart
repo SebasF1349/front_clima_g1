@@ -1,45 +1,48 @@
+import 'package:clima_app/models/climate_data_day_forecast.dart';
+import 'package:clima_app/models/climate_data_forecast.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/models/climate_data.dart';
-import 'package:clima_app/models/hourly_forecast_model.dart';
 import 'package:clima_app/models/weather_code.dart';
 import 'package:clima_app/utils/weather_code_translation.dart';
 
 class WeatherUtils {
   /// Función para determinar el máximo y el mínimo de temperatura de un día
   static Map<String, double> getDayTemperatureRange(List<double> temperatures) {
-    double maxTemp = temperatures[0];
-    double minTemp = temperatures[0];
-
-    for (var temp in temperatures) {
-      if (temp > maxTemp) {
-        maxTemp = temp;
-      }
-      if (temp < minTemp) {
-        minTemp = temp;
-      }
-    }
-
+    final maxTemp = temperatures.reduce((a, b) => a > b ? a : b);
+    final minTemp = temperatures.reduce((a, b) => a < b ? a : b);
     return {'maxTemp': maxTemp, 'minTemp': minTemp};
   }
 
   static double calculateAverageTemperature(List<double> temperatures) {
-  if (temperatures.isEmpty) {
-    throw ArgumentError("La lista de temperaturas no puede estar vacía.");
-  }
-
-  final sum = temperatures.reduce((a, b) => a + b);
-  return sum / temperatures.length;
-  }
-    static List<double> getHourlyTemperatures(HourlyForecast pronosticoHistorial) {
-      return pronosticoHistorial.data.hourly.temperature2M;
+    if (temperatures.isEmpty) {
+      throw ArgumentError("La lista de temperaturas no puede estar vacía.");
     }
 
-    static List<DateTime> getHourlyTimes(HourlyForecast pronosticoHistorial) {
-      return pronosticoHistorial.data.hourly.time.map((dateTime) {
-        return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
-      }).toList();
-    }
+    final sum = temperatures.reduce((a, b) => a + b);
+    return sum / temperatures.length;
+  }
 
+  static List<double> getHourlyTemperatures(ClimateDataForecast pronosticoHistorial) {
+    return pronosticoHistorial.data.hourly.temperature2M;
+  }
+
+  static List<DateTime> getHourlyTimes(ClimateDataForecast pronosticoHistorial) {
+    return pronosticoHistorial.data.hourly.time.map((dateTime) {
+      return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
+    }).toList();
+  }
+
+  static DateTime parseDateString(String dateString) {
+    List<String> parts = dateString.split('-');
+    if (parts.length == 3) {
+      int year = int.parse(parts[0]);
+      int month = int.parse(parts[1]);
+      int day = int.parse(parts[2]);
+      return DateTime(year, month, day);
+    } else {
+      throw FormatException('El formato de la fecha es incorrecto');
+    }
+  }
 
   /// Función para obtener el código de clima predominante
   static int getPredominantWeatherCode(List<int> weatherCodes) {
@@ -56,9 +59,7 @@ class WeatherUtils {
     final List<MapEntry<int, int>> sortedEntries = weatherCodeCount.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
-    final int predominantCode = sortedEntries.isNotEmpty ? sortedEntries[0].key : -1;
-
-    return predominantCode;
+    return sortedEntries.isNotEmpty ? sortedEntries[0].key : -1;
   }
 
   /// Función para procesar los datos del mock y devolver una lista de ClimateData
@@ -81,12 +82,11 @@ class WeatherUtils {
       final maxTemp = getDayTemperatureRange(temps)['maxTemp']!;
       final minTemp = getDayTemperatureRange(temps)['minTemp']!;
       final predominantCode = getPredominantWeatherCode(dailyWeatherCodes[date]!);
-      final dailyAverageTemp = calculateAverageTemperature(temperatures);
+      final dailyAverageTemp = calculateAverageTemperature(temps);  // Corregido aquí
       final hourlyTemperatures = getHourlyTemperatures(pronostico);
       final hourlyTimes = getHourlyTimes(pronostico);
 
-
-      // Usamos directamente el mapa weatherCodes para obtener ícono y etiqueta
+      // Usamos el mapa correcto para obtener íconos y etiquetas
       final WeatherCode? weatherData = weatherCodes[predominantCode];
       final weatherIcon = weatherData?.icon ?? Icons.help_outline;
       final weatherLabel = weatherData?.label ?? 'Clima desconocido';
@@ -105,4 +105,42 @@ class WeatherUtils {
 
     return result;
   }
+
+  static ClimateData processWeatherDataForDay(ClimateDataDayForecast forecast) {
+  // Asumiendo que solo se necesita el primer índice de las horas del día
+  // Esto puede modificarse para obtener más datos según sea necesario
+  var firstHourlyData = forecast.data.hourly;
+  
+  // Obtener la temperatura máxima, mínima y promedio
+  double maxTemp = firstHourlyData.temperature2M.reduce((a, b) => a > b ? a : b);
+  double minTemp = firstHourlyData.temperature2M.reduce((a, b) => a < b ? a : b);
+  double avgTemp = firstHourlyData.temperature2M.reduce((a, b) => a + b) / firstHourlyData.temperature2M.length;
+
+  // Obtener el icono y la etiqueta del clima usando el weatherCode
+  final List<int> weatherCodesListDay = forecast.data.hourly.weatherCode;
+  final weatherIconPredominate = getPredominantWeatherCode(weatherCodesListDay);
+  final WeatherCode? weatherDataa = weatherCodes[weatherIconPredominate];
+  final weatherIcon = weatherDataa?.icon ?? Icons.help_outline;
+  String weatherLabel = weatherDataa?.label ?? 'Clima desconocido';
+
+  // Convertir las horas y temperaturas en formato adecuado
+  List<DateTime> hourlyTimes = firstHourlyData.time.map((time) => DateTime.parse(time)).toList();
+  List<double> hourlyTemperatures = firstHourlyData.temperature2M;
+
+  double? windSpeed;  // Aquí puedes agregar datos del viento si están disponibles.
+  double? rain = firstHourlyData.rain.isNotEmpty ? firstHourlyData.rain[0].toDouble() : null;
+
+  return ClimateData(
+    date: DateTime.now().toIso8601String(),  // Puedes ajustar esto según el formato que necesites
+    maxTemp: maxTemp,
+    minTemp: minTemp,
+    avgTemp: avgTemp,
+    weatherIcon: weatherIcon,
+    weatherLabel: weatherLabel,
+    windSpeed: windSpeed,
+    rain: rain,
+    hourlyTemperatures: hourlyTemperatures,
+    hourlyTimes: hourlyTimes,
+  );
+}
 }
