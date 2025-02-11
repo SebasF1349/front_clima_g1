@@ -1,21 +1,21 @@
 import 'package:clima_app/models/daily_data_model.dart';
 import 'dart:convert';
 
-DailyForecast dailyForecastFromJson(String str) =>
-    DailyForecast.fromJson(json.decode(str));
+ClimateData climateForecastFromJson(String str) =>
+    ClimateData.fromJson(json.decode(str));
 
-String hourlyForecastToJson(DailyForecast data) => json.encode(data.toJson());
+String hourlyForecastToJson(ClimateData data) => json.encode(data.toJson());
 
-class DailyForecast {
+class ClimateData {
   String msg;
   DailyData data;
 
-  DailyForecast({
+  ClimateData({
     required this.msg,
     required this.data,
   });
 
-  factory DailyForecast.fromJson(Map<String, dynamic> json) => DailyForecast(
+  factory ClimateData.fromJson(Map<String, dynamic> json) => ClimateData(
         msg: json["msg"],
         data: DailyData.fromJson(json["data"]),
       );

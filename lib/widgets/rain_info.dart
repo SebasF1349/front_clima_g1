@@ -15,7 +15,7 @@ class WeatherInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final cardColor = theme.colorScheme.background;
+    final cardColor = theme.colorScheme.surface;
     final textColor = theme.textTheme.bodyLarge?.color ?? Colors.white;
 
     return Column(

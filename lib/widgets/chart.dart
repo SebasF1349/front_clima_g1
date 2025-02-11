@@ -7,12 +7,14 @@ class Chart extends StatelessWidget {
   final List<String> labels;
   final List<double> min;
   final List<double>? max;
+  final bool? disableClick;
 
   const Chart(
       {required this.labels,
       required this.min,
       this.max,
       required this.type,
+      this.disableClick,
       super.key});
 
   @override
@@ -102,16 +104,20 @@ class Chart extends StatelessWidget {
                         touchCallback:
                             (FlTouchEvent event, LineTouchResponse? response) {
                           if (response == null ||
-                              response.lineBarSpots == null) {
+                              response.lineBarSpots == null ||
+                              disableClick == true) {
                             return;
                           }
                           if (event is FlTapUpEvent) {
                             final spotIndex =
                                 response.lineBarSpots!.first.spotIndex;
-                            Navigator.pushNamed(context, 'pronostico_unitario',
+                            Navigator.pushNamed(
+                                context,
+                                type == 'diario'
+                                    ? 'pronostico_unitario_dia'
+                                    : 'pronostico_unitario_hora',
                                 arguments: <String, dynamic>{
-                                  'dataType': type,
-                                  'time': labels[spotIndex],
+                                  'label': labels[spotIndex],
                                 });
                             FocusManager.instance.primaryFocus?.unfocus();
                           }
@@ -173,3 +179,4 @@ class Chart extends StatelessWidget {
         isCurved: true);
   }
 }
+

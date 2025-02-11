@@ -2,8 +2,8 @@ import 'package:clima_app/models/hourly_units_model.dart';
 import 'package:clima_app/models/hourly_model.dart';
 
 class HourlyData {
-  int latitude;
-  int longitude;
+  double latitude;
+  double longitude;
   double generationtimeMs;
   int utcOffsetSeconds;
   String timezone;
@@ -24,8 +24,7 @@ class HourlyData {
     required this.hourly,
   });
 
-  factory HourlyData.fromJson(Map<String, dynamic> json) =>
-      HourlyData(
+  factory HourlyData.fromJson(Map<String, dynamic> json) => HourlyData(
         latitude: json["latitude"],
         longitude: json["longitude"],
         generationtimeMs: json["generationtime_ms"]?.toDouble(),

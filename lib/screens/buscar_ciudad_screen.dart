@@ -5,12 +5,11 @@ import 'package:clima_app/widgets/drawer_menu.dart';
 class BuscarCiudad extends StatelessWidget {
   const BuscarCiudad({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Buscar entre Bahias'),
+        title: const Text('Buscar Ciudad'),
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
@@ -38,7 +37,6 @@ class BuscarCiudad extends StatelessWidget {
     );
   }
 }
-
 
 class ClimaGifWidget extends StatelessWidget {
   const ClimaGifWidget({super.key});
