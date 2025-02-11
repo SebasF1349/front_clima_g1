@@ -10,7 +10,7 @@ double latitud = 0.0;
 DateTime? lastDay;
 DateTime? lastCheck;
 
-String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
+String get ip => dotenv.env['IP_EMULATOR'] ?? '10.0.2.2:3000';
 
 Future<HourlyForecast?> searchHourlyForecast() async {
   double newLongitud = Preferences.longitude;
@@ -29,13 +29,26 @@ Future<HourlyForecast?> searchHourlyForecast() async {
     return activeSearchHourly;
   }
 
-  final url = Uri.http(ip, '/api/v1/pronostico/horario',
-      {'longitud': '$newLongitud', 'latitud': '$newLatitud', 'dias': '1'});
-  final response = await http.get(url);
+  try {
+    final url = Uri.http(ip, '/api/v1/pronostico/horario',
+        {'longitud': '$newLongitud', 'latitud': '$newLatitud', 'dias': '1'});
+    final response = await http.get(url);
 
-  activeSearchHourly = hourlyForecastFromJson(response.body);
-  longitud = newLongitud;
-  latitud = newLatitud;
-  lastDay = today;
-  return activeSearchHourly;
+    if (response.statusCode == 200) {
+      try {
+        activeSearchHourly = hourlyForecastFromJson(response.body);
+        longitud = newLongitud;
+        latitud = newLatitud;
+        lastDay = today;
+        return activeSearchHourly;
+      } on FormatException {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
 }
+

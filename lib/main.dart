@@ -2,7 +2,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/background_detector.dart';
 import 'package:clima_app/helpers/preferences.dart';
-import 'package:clima_app/screens/ciudad_eleccion_screen.dart';
 import 'package:clima_app/screens/screens.dart';
 import 'package:clima_app/providers/theme_provider.dart';
 import 'package:provider/provider.dart';

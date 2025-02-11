@@ -9,45 +9,42 @@ import 'package:clima_app/utils/weather_utils.dart';
 ClimateData? cachedClimateData;
 double longitud = 0.0;
 double latitud = 0.0;
-DateTime? lastDay;
+DateTime? lastSearchedDate;
 
-String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
+String get ip => dotenv.env['IP_EMULATOR'] ?? '10.0.2.2:3000';
 
 Future<ClimateData?> searchClimateDataDayForecast(String date) async {
   double newLongitud = Preferences.longitude;
   double newLatitud = Preferences.latitude;
-  DateTime now = DateTime.now();
-  DateTime today = DateTime(now.year, now.month, now.day);
-  DateTime fecha = WeatherUtils.parseDateString(date);
-  int day = fecha.day;
-  int month = fecha.month;
-  int year = fecha.year;
+  DateTime fechaSolicitada = WeatherUtils.parseDateString(date);
 
-  // Usamos caché si ya se hizo la búsqueda hoy y en la misma ubicación
+  // Si el caché coincide con la misma fecha y ubicación, lo reutilizamos
   if (cachedClimateData != null &&
       longitud == newLongitud &&
       latitud == newLatitud &&
-      today == lastDay) {
+      lastSearchedDate == fechaSolicitada) {
     return cachedClimateData;
   }
 
-  final url = Uri.http(ip, '/api/v1/historial/$day', {
-    'latitud': '$newLatitud', 
+  final url = Uri.http(ip, '/api/v1/historial/${fechaSolicitada.day}', {
+    'latitud': '$newLatitud',
     'longitud': '$newLongitud',
-    'mes': '$month',
-    'anio': '$year'
+    'mes': '${fechaSolicitada.month}',
+    'anio': '${fechaSolicitada.year}'
   });
 
   final response = await http.get(url);
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> jsonData = jsonDecode(response.body);
-    final climateDataDayForecast = ClimateDataDayForecast.fromJson(jsonData); // Convierte JSON a modelo
+    final climateDataDayForecast =
+        ClimateDataDayForecast.fromJson(jsonData); // Convierte JSON a modelo
 
-    cachedClimateData = WeatherUtils.processWeatherDataForDay(climateDataDayForecast); // Procesa datos
+    cachedClimateData =
+        WeatherUtils.processWeatherDataForDay(climateDataDayForecast); // Procesa datos
     longitud = newLongitud;
     latitud = newLatitud;
-    lastDay = today;
+    lastSearchedDate = fechaSolicitada; // Guarda la fecha consultada en caché
     return cachedClimateData;
   } else {
     throw Exception('Error al obtener datos: ${response.statusCode}');

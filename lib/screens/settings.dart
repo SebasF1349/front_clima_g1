@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:clima_app/helpers/preferences.dart';
 import 'package:clima_app/providers/theme_provider.dart';
-import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
   const Settings({super.key});

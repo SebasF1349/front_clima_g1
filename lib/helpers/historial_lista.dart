@@ -11,7 +11,7 @@ double longitud = 0.0;
 double latitud = 0.0;
 DateTime? lastDay;
 
-String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
+String get ip => dotenv.env['IP_EMULATOR'] ?? '10.0.2.2:3000';
 
 Future<List<ClimateData>> searchClimateDataForecast() async {
   double newLongitud = Preferences.longitude;
@@ -31,7 +31,7 @@ Future<List<ClimateData>> searchClimateDataForecast() async {
   }
 
   final url = Uri.http(ip, '/api/v1/historial/', {
-    'latitud': '$newLatitud', 
+    'latitud': '$newLatitud',
     'longitud': '$newLongitud',
     'diaFin': '$yesterdayDay',
     'mesFin': '$yesterdayMonth',
@@ -42,9 +42,11 @@ Future<List<ClimateData>> searchClimateDataForecast() async {
 
   if (response.statusCode == 200) {
     final Map<String, dynamic> jsonData = jsonDecode(response.body);
-    final climateDataForecast = ClimateDataForecast.fromJson(jsonData); // Convierte JSON a modelo
+    final climateDataForecast =
+        ClimateDataForecast.fromJson(jsonData); // Convierte JSON a modelo
 
-    cachedClimateData = WeatherUtils.processWeatherData(climateDataForecast); // Procesa datos
+    cachedClimateData =
+        WeatherUtils.processWeatherData(climateDataForecast); // Procesa datos
     longitud = newLongitud;
     latitud = newLatitud;
     lastDay = today;
