@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/pronostico_horario_future.dart';
 import 'package:clima_app/models/hourly_data_model.dart';
 import 'package:clima_app/models/hourly_forecast_model.dart';
 import 'package:clima_app/models/hourly_model.dart';
-import 'package:flutter/material.dart';
 import 'package:clima_app/models/clima_card_data.dart';
 import 'package:clima_app/utils/weather_code_translation.dart'
     show weatherCodes;

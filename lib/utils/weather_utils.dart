@@ -22,13 +22,16 @@ class WeatherUtils {
     return sum / temperatures.length;
   }
 
-  static List<double> getHourlyTemperatures(ClimateDataForecast pronosticoHistorial) {
+  static List<double> getHourlyTemperatures(
+      ClimateDataForecast pronosticoHistorial) {
     return pronosticoHistorial.data.hourly.temperature2M;
   }
 
-  static List<DateTime> getHourlyTimes(ClimateDataForecast pronosticoHistorial) {
+  static List<DateTime> getHourlyTimes(
+      ClimateDataForecast pronosticoHistorial) {
     return pronosticoHistorial.data.hourly.time.map((dateTime) {
-      return DateTime(dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
+      return DateTime(
+          dateTime.year, dateTime.month, dateTime.day, dateTime.hour);
     }).toList();
   }
 
@@ -56,7 +59,8 @@ class WeatherUtils {
       }
     }
 
-    final List<MapEntry<int, int>> sortedEntries = weatherCodeCount.entries.toList()
+    final List<MapEntry<int, int>> sortedEntries = weatherCodeCount.entries
+        .toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 
     return sortedEntries.isNotEmpty ? sortedEntries[0].key : -1;
@@ -81,8 +85,10 @@ class WeatherUtils {
     dailyTemperatures.forEach((date, temps) {
       final maxTemp = getDayTemperatureRange(temps)['maxTemp']!;
       final minTemp = getDayTemperatureRange(temps)['minTemp']!;
-      final predominantCode = getPredominantWeatherCode(dailyWeatherCodes[date]!);
-      final dailyAverageTemp = calculateAverageTemperature(temps);  // Corregido aquí
+      final predominantCode =
+          getPredominantWeatherCode(dailyWeatherCodes[date]!);
+      final dailyAverageTemp =
+          calculateAverageTemperature(temps); // Corregido aquí
       final hourlyTemperatures = getHourlyTemperatures(pronostico);
       final hourlyTimes = getHourlyTimes(pronostico);
 
@@ -97,7 +103,7 @@ class WeatherUtils {
         minTemp: minTemp,
         avgTemp: dailyAverageTemp,
         weatherIcon: weatherIcon,
-        weatherLabel: weatherLabel, 
+        weatherLabel: weatherLabel,
         hourlyTemperatures: hourlyTemperatures,
         hourlyTimes: hourlyTimes,
       ));
@@ -107,40 +113,46 @@ class WeatherUtils {
   }
 
   static ClimateData processWeatherDataForDay(ClimateDataDayForecast forecast) {
-  // Asumiendo que solo se necesita el primer índice de las horas del día
-  // Esto puede modificarse para obtener más datos según sea necesario
-  var firstHourlyData = forecast.data.hourly;
-  
-  // Obtener la temperatura máxima, mínima y promedio
-  double maxTemp = firstHourlyData.temperature2M.reduce((a, b) => a > b ? a : b);
-  double minTemp = firstHourlyData.temperature2M.reduce((a, b) => a < b ? a : b);
-  double avgTemp = firstHourlyData.temperature2M.reduce((a, b) => a + b) / firstHourlyData.temperature2M.length;
+    var firstHourlyData = forecast.data.hourly;
 
-  // Obtener el icono y la etiqueta del clima usando el weatherCode
-  final List<int> weatherCodesListDay = forecast.data.hourly.weatherCode;
-  final weatherIconPredominate = getPredominantWeatherCode(weatherCodesListDay);
-  final WeatherCode? weatherDataa = weatherCodes[weatherIconPredominate];
-  final weatherIcon = weatherDataa?.icon ?? Icons.help_outline;
-  String weatherLabel = weatherDataa?.label ?? 'Clima desconocido';
+    // Obtener la temperatura máxima, mínima y promedio
+    double maxTemp =
+        firstHourlyData.temperature2M.reduce((a, b) => a > b ? a : b);
+    double minTemp =
+        firstHourlyData.temperature2M.reduce((a, b) => a < b ? a : b);
+    double avgTemp = firstHourlyData.temperature2M.reduce((a, b) => a + b) /
+        firstHourlyData.temperature2M.length;
 
-  // Convertir las horas y temperaturas en formato adecuado
-  List<DateTime> hourlyTimes = firstHourlyData.time.map((time) => DateTime.parse(time)).toList();
-  List<double> hourlyTemperatures = firstHourlyData.temperature2M;
+    // Obtener el icono y la etiqueta del clima usando el weatherCode
+    final List<int> weatherCodesListDay = forecast.data.hourly.weatherCode;
+    final weatherIconPredominate =
+        getPredominantWeatherCode(weatherCodesListDay);
+    final WeatherCode? weatherDataa = weatherCodes[weatherIconPredominate];
+    final weatherIcon = weatherDataa?.icon ?? Icons.help_outline;
+    String weatherLabel = weatherDataa?.label ?? 'Clima desconocido';
 
-  double? windSpeed;  // Aquí puedes agregar datos del viento si están disponibles.
-  double? rain = firstHourlyData.rain.isNotEmpty ? firstHourlyData.rain[0].toDouble() : null;
+    // Convertir las horas y temperaturas en formato adecuado
+    List<DateTime> hourlyTimes =
+        firstHourlyData.time.map((time) => DateTime.parse(time)).toList();
+    List<double> hourlyTemperatures = firstHourlyData.temperature2M;
 
-  return ClimateData(
-    date: DateTime.now().toIso8601String(),  // Puedes ajustar esto según el formato que necesites
-    maxTemp: maxTemp,
-    minTemp: minTemp,
-    avgTemp: avgTemp,
-    weatherIcon: weatherIcon,
-    weatherLabel: weatherLabel,
-    windSpeed: windSpeed,
-    rain: rain,
-    hourlyTemperatures: hourlyTemperatures,
-    hourlyTimes: hourlyTimes,
-  );
-}
+    double?
+        windSpeed; // Aquí puedes agregar datos del viento si están disponibles.
+    double? rain = firstHourlyData.rain.isNotEmpty
+        ? firstHourlyData.rain[0].toDouble()
+        : null;
+
+    return ClimateData(
+      date: DateTime.now().toIso8601String(),
+      maxTemp: maxTemp,
+      minTemp: minTemp,
+      avgTemp: avgTemp,
+      weatherIcon: weatherIcon,
+      weatherLabel: weatherLabel,
+      windSpeed: windSpeed,
+      rain: rain,
+      hourlyTemperatures: hourlyTemperatures,
+      hourlyTimes: hourlyTimes,
+    );
+  }
 }

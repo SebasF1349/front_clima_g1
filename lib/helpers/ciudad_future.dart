@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:clima_app/models/ciudad_model.dart';
 
-String get ip => dotenv.env['IP_CHROME'] ?? '127.0.0.1:3000';
+String get ip => dotenv.env['IP_EMULATOR'] ?? '10.0.2.2:3000';
 
 Future<CiudadesLista?> searchCiudad(String query) async {
   try {
@@ -10,7 +10,8 @@ Future<CiudadesLista?> searchCiudad(String query) async {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      if (response.headers['content-type']?.contains('application/json') ?? false) {
+      if (response.headers['content-type']?.contains('application/json') ??
+          false) {
         try {
           return ciudadesListaFromJson(response.body);
         } on FormatException {

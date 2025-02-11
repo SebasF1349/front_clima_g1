@@ -50,7 +50,7 @@ class CiudadCardWidget extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              ciudadNombre +', '+ provinciaNombre,
+              '$ciudadNombre, $provinciaNombre',
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

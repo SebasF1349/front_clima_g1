@@ -7,12 +7,14 @@ class Chart extends StatelessWidget {
   final List<String> labels;
   final List<double> min;
   final List<double>? max;
+  final bool? disableClick;
 
   const Chart(
       {required this.labels,
       required this.min,
       this.max,
       required this.type,
+      this.disableClick,
       super.key});
 
   @override
@@ -102,7 +104,8 @@ class Chart extends StatelessWidget {
                         touchCallback:
                             (FlTouchEvent event, LineTouchResponse? response) {
                           if (response == null ||
-                              response.lineBarSpots == null) {
+                              response.lineBarSpots == null ||
+                              disableClick == true) {
                             return;
                           }
                           if (event is FlTapUpEvent) {
@@ -176,3 +179,4 @@ class Chart extends StatelessWidget {
         isCurved: true);
   }
 }
+

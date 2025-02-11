@@ -1,5 +1,5 @@
-import 'package:clima_app/helpers/historial_lista.dart';
 import 'package:flutter/material.dart';
+import 'package:clima_app/helpers/historial_lista.dart';
 import 'package:clima_app/models/climate_data.dart';
 import 'package:clima_app/widgets/drawer_menu.dart';
 import 'package:clima_app/screens/weather_info.dart';
@@ -60,7 +60,8 @@ class _WeatherScreenListState extends State<WeatherScreenList> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => WeatherDetailsScreen(date: data.date),
+                        builder: (context) =>
+                            WeatherDetailsScreen(date: data.date),
                       ),
                     );
                   },

@@ -1,12 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:clima_app/helpers/pronostico_horario_future.dart';
 import 'package:clima_app/helpers/pronostico_diario_future.dart';
 import 'package:clima_app/models/daily_forecast_model.dart';
 import 'package:clima_app/models/hourly_forecast_model.dart';
-import 'package:flutter/material.dart';
 import 'package:clima_app/utils/weather_code_translation.dart';
-import 'package:clima_app/widgets/drawer_menu.dart';
-import 'package:clima_app/widgets/chart.dart';
-import 'package:clima_app/widgets/weather_detail.dart';
+import 'package:clima_app/widgets/widgets.dart';
 
 class Pronostico extends StatefulWidget {
   const Pronostico({super.key});
@@ -40,22 +38,29 @@ class _Pronostico extends State<Pronostico> {
             future: Future.wait([_pronosticoHorario, _pronosticoDiario]),
             builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
               if (snapshot.hasData) {
+                final pronostico = snapshot.data;
+
+                if (pronostico == null) {
+                  return const Center(
+                      child: Text('Ha habido un error al buscar los datos.'));
+                }
+
                 DateTime now = DateTime.now();
 
                 List<double> tempHorario =
-                    tempToDouble(snapshot.data![0]!.data.hourly.temperature2M);
+                    tempToDouble(pronostico[0]!.data.hourly.temperature2M);
                 List<String> hourLabelsHorario =
-                    getHourLabels(snapshot.data![0]!.data.hourly.time);
+                    getHourLabels(pronostico[0]!.data.hourly.time);
 
-                List<double> tempDiarioMin = tempToDouble(
-                    snapshot.data![1]!.data.daily.temperature2MMin);
+                List<double> tempDiarioMin =
+                    tempToDouble(pronostico[1]!.data.daily.temperature2MMin);
                 List<double> tempDiarioMax =
-                    tempToDouble(snapshot.data![1].data.daily.temperature2MMax);
+                    tempToDouble(pronostico[1].data.daily.temperature2MMax);
                 List<String> hourLabelsDiario =
-                    getDayLabels(snapshot.data![1].data.daily.time);
+                    getDayLabels(pronostico[1].data.daily.time);
 
                 final weather =
-                    weatherCodes[snapshot.data![1].data.daily.weatherCode[0]];
+                    weatherCodes[pronostico[1].data.daily.weatherCode[0]];
 
                 final weatherDetails = [
                   {
@@ -72,7 +77,7 @@ class _Pronostico extends State<Pronostico> {
                     'title': 'Lluvia',
                     'icon': Icons.water_drop,
                     'value':
-                        "${snapshot.data![1].data.daily.precipitationProbabilityMax[0]} %",
+                        "${pronostico[1].data.daily.precipitationProbabilityMax[0]} %",
                   },
                 ];
 
@@ -127,7 +132,7 @@ class _Pronostico extends State<Pronostico> {
                   ]),
                 ]);
               } else if (snapshot.hasError) {
-                return Text('${snapshot.error}');
+                return Text('Error al obtener los datos');
               } else {
                 return const CircularProgressIndicator();
               }
